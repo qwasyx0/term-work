@@ -1,0 +1,85 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: #fff;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+header {
+    font-family: 'Ubuntu', sans-serif;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f07c01;
+    height: 50px;
+    font-size: 0;
+}
+
+
+header nav a {
+    display: inline-block;
+    color: #000000;
+    font-size: 20px;
+    padding: 13.5px 16px;
+    text-decoration:none;
+
+}
+header nav a:hover {
+    background-color: #014994;
+    color: white;
+    transition: color 400ms, background-color 400ms, border-color 400ms;
+}
+
+#hero {
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+#hero h1 {
+    font-size: 5em;
+}
+
+#hero a {
+    padding: 10px 20px;
+    background-color: white;
+    border-radius: 30px;
+    color: #014994;
+    border: 2px solid #014994;
+    text-decoration:none;
+}
+
+#hero a:hover {
+    background-color: #014994;
+    color: white;
+    border: 2px solid #014994;
+    transition: color 400ms, background-color 400ms, border-color 400ms;
+    text-decoration:none;
+}
+
+footer {
+    font-family: 'Ubuntu', sans-serif;
+    margin-top: 20px;
+    min-height: 200px;
+    display: flex;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #e9eaed;
+    float: none;
+}
+
+.full-width-wrapper, main {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
