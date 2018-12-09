@@ -12,15 +12,13 @@ if (!empty($_POST) && !empty($_POST["loginMail"]) && !empty($_POST["loginPasswor
     if (!$user) {
         echo "user not found";
     } else {
-        echo "you are logged in. Your ID is: " . $user["id"];
-        $_SESSION["user_id"] = $user["id"];
-        $_SESSION["username"] = $user["username"];
+        echo "you are logged in. Your EMAIL is: " . $user["email"];
         $_SESSION["email"] = $user["email"];
         header("Location:" . BASE_URL);
     }
 
 } else if (!empty($_POST)) {
-    echo "Username and password are required";
+    echo "Email and password are required";
 }
 ?>
 <section id="hero">

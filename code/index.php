@@ -1,31 +1,6 @@
-<?php ob_start(); session_start(); include 'config.php';
-#process of a message
-$message = "";
-if (isset($_POST['newsletter'])) {
-    if (!empty($_POST['email'])) {
-        if ((preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $_POST['email']))) {
-            try {
-                $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
-                // set the PDO error mode to exception
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-                // prepare sql and bind parameters
-                $stmt = $conn->prepare("INSERT INTO newsletter (email, created) VALUES (:email, NOW())");
-                $stmt->bindParam(':email', $_POST["email"]);
-                $stmt->execute();
-
-                $message = "You are subscribed!";
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
-                $message = "Unable to save to the database!";
-            }
-        } else {
-            $message = "Bad formatted email address!";
-        }
-    } else {
-        $message = "Email address is needed!";
-    }
-}
+<?php ob_start();
+session_start();
+include 'config.php';
 ?>
 
 
@@ -44,7 +19,7 @@ if (isset($_POST['newsletter'])) {
      <img id="header-logo" src="images/logo.jpg"/> -->
     <nav id="nav">
         <a href="<?= BASE_URL ?>">Úvodní stránka</a>
-        <?php if (!empty($_SESSION["user_id"])) { ?>
+        <?php if (!empty($_SESSION["email"])) { ?>
             <a href="<?= BASE_URL  . "?page=users" ?>">Nastavení</a>
             <a href="<?= BASE_URL  . "?page=logout" ?>">Odhlásit</a>
         <?php } else { ?>
@@ -70,8 +45,8 @@ if (isset($_GET["page"])) {
         include $file;
     } }else { ?>
 
-<?php if (!empty($_SESSION["user_id"])) { ?>
-    <section id="hero">
+<?php if (!empty($_SESSION["email"])) { ?>
+    <section id="asdf">
         <div>
             <h1>Po prihaseni</h1>
             <h2>Semestrální práce</h2>
@@ -80,6 +55,9 @@ if (isset($_GET["page"])) {
             </a>
         </div>
     </section>
+        <main>
+            <a>TOTO JE INDEX PO PRIHLASENI</a>
+        </main>
 <?php }else { ?>
 <section id="hero">
     <div>

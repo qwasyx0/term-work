@@ -32,7 +32,33 @@ header nav a:hover {
     color: white;
     transition: color 400ms, background-color 400ms, border-color 400ms;
 }
+#asdf {
+    height: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+#asdf h1 {
+    font-size: 5em;
+}
 
+#asdf a {
+    padding: 10px 20px;
+    background-color: white;
+    border-radius: 30px;
+    color: RED;
+    border: 2px solid RED;
+    text-decoration:none;
+}
+
+#asdf a:hover {
+    background-color: RED;
+    color: white;
+    border: 2px solid RED;
+    transition: color 400ms, background-color 400ms, border-color 400ms;
+    text-decoration:none;
+}
 #hero {
     height: 100%;
     text-align: center;
