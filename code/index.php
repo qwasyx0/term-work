@@ -56,7 +56,7 @@ if (isset($_GET["page"])) {
         </div>
     </section>
         <main>
-            <a>TOTO JE INDEX PO PRIHLASENI</a>
+            <a >TOTO JE INDEX PO PRIHLASENI</a>
         </main>
 <?php }else { ?>
 <section id="hero">

@@ -1030,17 +1030,23 @@
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="256" parent="243" name="user_id_uindex">
+    <column id="256" parent="243" name="role">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="257" parent="243" name="user_id_uindex">
       <ColNames>id</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="257" parent="243" name="PRIMARY">
+    <key id="258" parent="243" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="258" parent="243" name="user_id_uindex">
+    <key id="259" parent="243" name="user_id_uindex">
       <ColNames>id</ColNames>
       <UnderlyingIndexName>user_id_uindex</UnderlyingIndexName>
     </key>
