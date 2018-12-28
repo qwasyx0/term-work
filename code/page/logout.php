@@ -1,7 +1,7 @@
-<h1>This is LOGOUT</h1>
-</section>
 <?php
-session_destroy();
-
-echo 'You have been logged out. <a href="./index.php">Go back</a>'; ?>
+session_destroy(); ?>
+<section id="hero">
+    <?php
+echo 'Byli jste odhlášeni. <a href="./index.php">Úvodní stránka</a>'; ?>
+</section>
 

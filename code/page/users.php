@@ -6,15 +6,17 @@ $stmt->bindParam(':email', $_SESSION["email"]);
 $stmt->execute();
 $user = $stmt->fetch();
 ?>
-    <style>
-        div {
-            margin-top: 30px;
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-    </style>
+ <style>
+     div {
+         margin-top: 30px;
+         margin-left: 20px;
+         margin-bottom: 20px;
+     }
+ </style>
+ <td><a style="color:blue;" href="index.php?page=pridatUzivatele&id_smazat='.$radek["id_uzivatele"].'">Smazat</a></td>
 <?php
-if ($_SESSION["role"] == '0') { ?>
+
+if ($user["role"] == '0') { ?>
     <?php
     if ($_GET["action"] == "update") {
         include "./user/user-update.php";
@@ -25,7 +27,7 @@ if ($_SESSION["role"] == '0') { ?>
     <a href="<?= BASE_URL . "?page=users&action=update" ?>">Upravit mé osobní údaje</a>
     <?php include "./user/user-read-self.php";
 }
-if ($_SESSION["role"]  == '1') { ?>
+if ($user["role"]  == '1') { ?>
     <?php if ($_GET["action"] == "delete") {
         include "./user/user-delete.php";
     } else if ($_GET["action"] == "update") {
@@ -34,38 +36,6 @@ if ($_SESSION["role"]  == '1') { ?>
         include "./user/user-add.php";
     } else {?>    <div>Nastavení administrátora</div>
         <?php   include "./user/user-read-all.php";
-    }
-}
-?>
-
-
-<?php
-/*if ($_GET["action"] == "read-all") {
-    echo "<h2>All users</h2>";
-    $userDao = new UserRepository(Connection::getPdoInstance());
-    $allUsersResult = $userDao->getAllUsers();
-
-    $datatable = new DataTable($allUsersResult);
-    $datatable->addColumn("id", "ID");
-    $datatable->addColumn("email", "Email");
-    $datatable->addColumn("created", "Created");
-    $datatable->render();
-
-
-} else if ($_GET["action"] == "by-email") {
-    echo "<h2>By email</h2>";
-//toto nahore
-    ?>
-    <?php
-
-    if (!empty($_POST["mail"])) {
-        $userDao = new UserRepository(Connection::getPdoInstance());
-        $usersByEmail = $userDao->getByEmail($_POST["mail"]);
-        $datatable = new DataTable($usersByEmail);
-        $datatable->addColumn("id", "ID");
-        $datatable->addColumn("email", "Email");
-        $datatable->addColumn("created", "Created");
-        $datatable->render();
     }
 }
 ?>
