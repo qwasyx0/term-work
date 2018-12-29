@@ -28,14 +28,14 @@ class Authentication
 
     public function login(string $email, string $password) : bool
     {
-        $stmt = $this->conn->prepare("SELECT id, username, email FROM users WHERE email= :email and password = :password");
+        $stmt = $this->conn->prepare("SELECT * FROM uzivatele WHERE email= :email and password = :password");
         $stmt->bindParam(':email', $_POST["loginMail"]);
         $stmt->bindParam(':password', $_POST["loginPassword"]);
         $stmt->execute();
         $user = $stmt->fetch();
 
         if ($user) {
-            $userDto = array('user_id' => $user['id'], 'username' => $user['username'], 'email' => $user['email']);
+            $userDto = array('user_id' => $user['id'], 'role' => $user['role'], 'email' => $user['email']);
             $_SESSION['identity'] = $userDto;
             self::$identity = $userDto;
             return true;

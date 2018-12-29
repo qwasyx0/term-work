@@ -6,16 +6,11 @@
             <input type="submit" value="log in">
         </form>
         <p>
-
-
-
             <?php
             if (!empty($_POST) && !empty($_POST["loginMail"]) && !empty($_POST["loginPassword"])) {
                 $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD);
                 $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                //get user by email and password
-                $stmt = $conn->prepare("SELECT id, username, email FROM users 
-                                      WHERE email= :email and password = :password");
+                $stmt = $conn->prepare("SELECT idciselpod, email, role FROM uzivatele WHERE email= :email and password = :password");
                 $stmt->bindParam(':email', $_POST["loginMail"]);
                 $stmt->bindParam(':password', $_POST["loginPassword"]);
                 $stmt->execute();
@@ -32,14 +27,10 @@
                 echo "Zadejte email a heslo";
             }
             ?>
-
-
-
         </p>
     </div>
 </section>
 <main>
     <a>TOTO JE LOGIN</a>
 </main>
-
 
