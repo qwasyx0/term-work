@@ -6,10 +6,8 @@ class Authentication
     static private $instance = NULL;
     static private $identity = NULL;
 
-    private $conn = null;
 
-
-    static function getInstance() : Authentication
+    static function getInstance()
     {
         if (self::$instance == NULL) {
             self::$instance = new Authentication();
@@ -22,29 +20,31 @@ class Authentication
         if (isset($_SESSION['identity'])) {
             self::$identity = $_SESSION['identity'];
         }
-        $this->conn = Connection::getPdoInstance();
-
     }
 
-    public function login(string $email, string $password) : bool
+    public function login(string $email, string $password)
     {
-        $stmt = $this->conn->prepare("SELECT * FROM uzivatele WHERE email= :email and password = :password");
-        $stmt->bindParam(':email', $_POST["loginMail"]);
-        $stmt->bindParam(':password', $_POST["loginPassword"]);
-        $stmt->execute();
-        $user = $stmt->fetch();
+        $db = new Database();
+        $db->query('SELECT * FROM uzivatele WHERE email= :email and password = :password');
+        $db->bind(":email", $email);
+        $db->bind(":password", $password);
+        $r = $db->single();
 
-        if ($user) {
-            $userDto = array('user_id' => $user['id'], 'role' => $user['role'], 'email' => $user['email']);
-            $_SESSION['identity'] = $userDto;
-            self::$identity = $userDto;
-            return true;
+        if ($r != false) {
+            if (count($r) > 0) {
+                $profil = array('email' => $r['email'], 'role' => $r['role']);
+                $_SESSION['identity'] = $profil;
+                self::$identity = $profil;
+                return true;
+            } else {
+                self::$identity = NULL;
+                return false;
+            }
         } else {
             return false;
         }
     }
-
-    public function hasIdentity() : bool
+    public function hasIdentity()
     {
         if (self::$identity == NULL) {
             return false;

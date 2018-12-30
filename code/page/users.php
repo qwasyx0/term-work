@@ -10,13 +10,7 @@
 
  </script>
 
- <?php
- $host = 'localhost';
- $user= 'root';
- $pass ='';
- $name='iwww';
- $pdo = new PDO("mysql:host=$host;dbname=$name", $user, $pass);
- ?>
+
  <main>
      <?php
 
@@ -32,7 +26,14 @@
      }
 
      if(isset($_GET['id_upravit'])){
-         echo   '<h2>Upravit uživatele</h2>'
+         $idemail = $_GET['id_upravit'];
+
+         $sql2 = "select email from uzivatele where email = :id";
+         $q2 = $pdo->prepare($sql2);
+         $q2->bindValue(":id", $idemail);
+
+         $q2->execute();
+         echo   '<h2>Upravit uživatele <u>' . $idemail .'</u>   </h2> '
              . '<br> <a style="color:blue;" href="index.php?page=users">Zpět na přidání uživatele.</a><br><br>';
 
      }else{
@@ -47,7 +48,8 @@
          <?php
 
          if(isset($_POST['pridani'])||isset($_POST['upravit'])){
-            //join z jine tabulky
+
+             //join z jine tabulky
        /*      $role = 1;
              $sql = 'select role from uzivatele where nazev = :nazev';
              $q = $pdo->prepare($sql);
@@ -57,13 +59,12 @@
                  $role =  $radek["role"];
              }
 */
-             $sha_password = hash('sha512', $_POST['password']);
+             $hash = hash('sha512', $_POST['password']);
              if(isset($_POST['upravit'])){
-                                                        //upravím email takze updatuju novy - neni nalezen a nemam podminku asi?
-                 $sql2 = "update uzivatele set email= :email, password= :password, role= :role where email = :email";
+                 $sql2 = "update uzivatele set  password= :password, role= :role where email = :email ";
                  $q2 = $pdo->prepare($sql2);
-                 $q2->bindValue(":email", $_POST['loginMail']);
-                 $q2->bindValue(":password", $sha_password);
+                 $q2->bindValue(":email", $idemail);
+                 $q2->bindValue(":password", $hash);
                  $q2->bindValue(":role", $_POST['role']);
                  $q2->execute();
                  echo 'Úprava proběhla úspěšně.';
@@ -71,7 +72,7 @@
                  $sql = "INSERT INTO uzivatele (email, password, role) values (:email, :password, :role);";
                  $q2 = $pdo->prepare($sql);
                  $q2->bindValue(":email", $_POST['loginMail']);
-                 $q2->bindValue(":password", $sha_password);
+                 $q2->bindValue(":password", $hash);
                 $q2->bindValue(":role", $_POST['role']);
                  $q2->execute();
                  echo 'Přidání proběhlo úspěšně.';
@@ -81,22 +82,36 @@
              ?>
 
              <form  action="#" method="post">
-                 <?php
 
-                 ?>
+
+
                  <table>
+                     <?php  if(!isset($_GET['id_upravit'])){?>
                      <tr>
-                         <td><label for="loginMail">Email: </label></td><td><input value="<?php if(isset($_GET["email"])){echo $_GET["email"];} ?>" required type="text" name="loginMail" id="loginMail" ></td>
+                         <td><label for="loginMail">Email: </label></td><td><input required type="text" name="loginMail" id="loginMail" ></td>
                      </tr>
+                     <?php }?>
                      <tr>
                          <td><label for="password">Heslo: </label></td><td><input  required type="password" name="password" id="password"></td>
                      </tr>
                      <tr>
                          <td><label for="passwordZnova">Heslo znova: </label></td><td><input required type="password"  id="passwordZnova" name="passwordRepeat"  oninput="check(this)"/></td>
                      </tr>
-                     <tr>
-                         <td><label for="role">Role: </label></td><td><input required type="text"  id="role" name="role"/></td>
-                     </tr>
+                     <td>
+                     <label for="role">Role: </label></td> <td>
+                     <select name="role" >
+                         <?php
+                         $sql = 'select distinct role from uzivatele order by role asc';
+                         $q = $pdo->prepare($sql);
+                         $q->execute();
+                         while ($radek = $q->fetch(PDO::FETCH_ASSOC)){
+                             $role =  $radek['role'];
+                             echo ' <option value="'.$role.'">'.$role.'</option> ';
+                         }
+                         ?>
+                     </select>
+                     </td>
+
                      <tr>
                          <td></td><td>
                              <?php
@@ -118,8 +133,16 @@
          ?>
 
      </div>
-
-
+     <?php
+     $sql3 = "select * from uzivatele where email=:email;";
+     $q3 = $pdo->prepare($sql3);
+     $identity = $authService->getIdentity();
+     $q3->bindValue(":email", $identity['email']);
+     $q3->execute();
+     $row = $q3->fetch(PDO::FETCH_ASSOC);
+        // nefunguje role
+     if ($row["role"] == 0) {
+     ?>
      <h2>Uživatelské účty</h2>
      <div class="formular">
          <table><tr>
@@ -129,18 +152,33 @@
              $sql = 'select email, role from uzivatele;';
              $q = $pdo->prepare($sql);
              $q->execute();
-             while ($radek = $q->fetch(PDO::FETCH_ASSOC)){
-                 echo'
+             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                 echo '
                 <tr>
-                    <td>'.$radek["email"].'</td>
-                    <td>'.$radek["role"].'</td>                       
-                    <td><a style="color:blue;" href="index.php?page=users&id_upravit='.$radek["email"].'&role='.$radek["role"].'">Upravit</a></td>
+                    <td>' . $radek["email"] . '</td>
+                    <td>' . $radek["role"] . '</td>                       
+                    <td><a style="color:blue;" href="index.php?page=users&id_upravit=' . $radek["email"] . '&role=' . $radek["role"] . '">Upravit</a></td>
                                                       
-                     <td><a style="color:blue;" href="index.php?page=users&id_smazat='.$radek["email"].'">Smazat</a></td>
+                     <td><a style="color:blue;" href="index.php?page=users&id_smazat=' . $radek["email"] . '">Smazat</a></td>
                                                    
-                </tr> ' ;
-
+                </tr> ';
              }
+             } else {
+             ?>
+             <h2>Údaje uživatele</h2>
+             <div class="formular">
+                 <table><tr>
+                         <th>Email</th><th>Upravit</th>
+                     </tr>
+                     <?php
+              echo '
+                <tr>
+                    <td>' . $row['email'] . '</td>                      
+                    <td><a style="color:blue;" href="index.php?page=users&id_upravit=' . $row["email"] . '">Upravit</a></td>                                                
+                </tr> ';
+
+            }
+
              echo '</table>';
              ?>
      </div>
