@@ -100,6 +100,7 @@ footer {
     width: 100%;
     background-color: #e9eaed;
     float: none;
+    position: relative;
 }
 
 .full-width-wrapper, main {
@@ -120,7 +121,7 @@ footer {
 }
 
 .formular {
-
+    display: inline-block;
     margin:auto;
     width:960px;
     margin-bottom:80px;
@@ -164,4 +165,9 @@ footer {
     font-family: 'Open Sans', sans-serif;
     color:black;
     border-bottom: 1px solid #ddd;
+}
+
+
+#select_odecty {
+    margin-top: 50px;
 }

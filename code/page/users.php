@@ -9,7 +9,15 @@
      }
 
  </script>
-
+<?php
+                 $sql = "select role from uzivatele where email=:email;";
+                 $q = $pdo->prepare($sql);
+                 $identity = $authService->getIdentity();
+                 $q->bindValue(":email", $_SESSION['email']);
+                 $q->execute();
+                 $row = $q->fetch(PDO::FETCH_ASSOC);
+                 $_SESSION['role'] = $row["role"];
+                 ?>
 
  <main>
      <?php
@@ -37,7 +45,9 @@
              . '<br> <a style="color:blue;" href="index.php?page=users">Zpět na přidání uživatele.</a><br><br>';
 
      }else{
-         echo   '<h2>Přidat nového uživatele</h2>';
+         if($_SESSION['role'] == 1) {
+             echo '<h2>Přidat nového uživatele</h2>';
+         }
      }
      ?>
 
@@ -57,10 +67,10 @@
              $q->execute();
              while ($radek = $q->fetch(PDO::FETCH_ASSOC)){
                  $role =  $radek["role"];
-             }
-*/
-             $hash = hash('sha512', $_POST['password']);
+             } */
+         $hash = hash('sha512', $_POST['password']);
              if(isset($_POST['upravit'])){
+         if ($_SESSION['role'] == 1) {
                  $sql2 = "update uzivatele set  password= :password, role= :role where email = :email ";
                  $q2 = $pdo->prepare($sql2);
                  $q2->bindValue(":email", $idemail);
@@ -68,7 +78,16 @@
                  $q2->bindValue(":role", $_POST['role']);
                  $q2->execute();
                  echo 'Úprava proběhla úspěšně.';
-             }else{
+                 } else {
+                 $sql2 = "update uzivatele set  password= :password where email = :email ";
+                 $q2 = $pdo->prepare($sql2);
+                 $q2->bindValue(":email", $idemail);
+                 $q2->bindValue(":password", $hash);
+                 $q2->execute();
+                 echo 'Úprava proběhla úspěšně.';
+             }
+                 }
+             else{
                  $sql = "INSERT INTO uzivatele (email, password, role) values (:email, :password, :role);";
                  $q2 = $pdo->prepare($sql);
                  $q2->bindValue(":email", $_POST['loginMail']);
@@ -76,20 +95,23 @@
                 $q2->bindValue(":role", $_POST['role']);
                  $q2->execute();
                  echo 'Přidání proběhlo úspěšně.';
-             }
-         }else{
 
+         } }
+         else {
              ?>
 
              <form  action="#" method="post">
 
-
+                 <?php
+                 if (($_SESSION['role'] == 1) or (($_SESSION['role'] == 0) and isset($_GET['id_upravit']))) {?>
 
                  <table>
                      <?php  if(!isset($_GET['id_upravit'])){?>
+
                      <tr>
                          <td><label for="loginMail">Email: </label></td><td><input required type="text" name="loginMail" id="loginMail" ></td>
                      </tr>
+
                      <?php }?>
                      <tr>
                          <td><label for="password">Heslo: </label></td><td><input  required type="password" name="password" id="password"></td>
@@ -97,6 +119,7 @@
                      <tr>
                          <td><label for="passwordZnova">Heslo znova: </label></td><td><input required type="password"  id="passwordZnova" name="passwordRepeat"  oninput="check(this)"/></td>
                      </tr>
+                     <?php if ($_SESSION['role'] == 1) { ?>
                      <td>
                      <label for="role">Role: </label></td> <td>
                      <select name="role" >
@@ -111,16 +134,18 @@
                          ?>
                      </select>
                      </td>
-
+                     <?php  }  }?>
                      <tr>
                          <td></td><td>
                              <?php
                              if(isset($_GET['id_upravit'])){
                                  echo'<input type="submit" value="Upravit" name="upravit" style="width:160px;">';
-                             }else{
+                             }
+                             else if($row["role"] == 1) {
                                  echo'<input type="submit" value="Přidat" name="pridani" style="width:160px;">';
 
                              }
+
                              ?>
                          </td>
                      </tr>
@@ -133,17 +158,21 @@
          ?>
 
      </div>
+
+
+
      <?php
-     $sql3 = "select * from uzivatele where email=:email;";
-     $q3 = $pdo->prepare($sql3);
+     $sql = "select role from uzivatele where email=:email;";
+     $q = $pdo->prepare($sql);
      $identity = $authService->getIdentity();
-     $q3->bindValue(":email", $identity['email']);
-     $q3->execute();
-     $row = $q3->fetch(PDO::FETCH_ASSOC);
+     $q->bindValue(":email", $_SESSION['email']);
+     $q->execute();
+     $row = $q->fetch(PDO::FETCH_ASSOC);
         // nefunguje role
-     if ($row["role"] == 0) {
+     if ($row["role"] == 1) {
      ?>
      <h2>Uživatelské účty</h2>
+
      <div class="formular">
          <table><tr>
                  <th>Email</th><th>Role</th><th>Upravit</th><th>Smazat</th>
@@ -166,19 +195,26 @@
              } else {
              ?>
              <h2>Údaje uživatele</h2>
-             <div class="formular">
-                 <table><tr>
-                         <th>Email</th><th>Upravit</th>
-                     </tr>
-                     <?php
-              echo '
+
+             <table>
+                 <tr>
+                     <th>Email</th>
+                     <th>Upravit</th>
+                 </tr>
+                 <?php
+                 $sql = 'select email from uzivatele where email=:email;';
+                 $q = $pdo->prepare($sql);
+                 $q->bindValue(":email", $_SESSION['email']);
+                 $q->execute();
+                 while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                     echo '
                 <tr>
-                    <td>' . $row['email'] . '</td>                      
-                    <td><a style="color:blue;" href="index.php?page=users&id_upravit=' . $row["email"] . '">Upravit</a></td>                                                
+                    <td>' . $radek['email'] . '</td>                      
+                    <td><a style="color:blue;" href="index.php?page=users&id_upravit=' . $radek["email"] . '">Upravit</a></td>                                                
                 </tr> ';
 
-            }
-
+                 }
+                 }
              echo '</table>';
              ?>
      </div>

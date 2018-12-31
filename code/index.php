@@ -12,12 +12,11 @@ function __autoload($className)
     return false;
 }
 ?>
-
+<!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css"
-          href="css/css.css">
+    <link rel="stylesheet" type="text/css" href="css/css.css">
     <title>Semestralni prace</title>
 
 
@@ -38,7 +37,7 @@ if (isset($_GET['page'])) {
         include "./page/404.php";
     }
 } else {
-    if (!empty($_SESSION["email"])) { ?>
+    if ($authService->hasIdentity()) : ?>
         <section id="hero">
             <div>
                 <h1>Po prihaseni</h1>
@@ -51,7 +50,7 @@ if (isset($_GET['page'])) {
         <main>
             <a>TOTO JE INDEX PO PRIHLASENI</a>
         </main>
-    <?php } else { ?>
+    <?php  else : ?>
         <section id="hero">
             <div>
                 <h1>Odečty vodoměrů</h1>
@@ -65,7 +64,7 @@ if (isset($_GET['page'])) {
         <main>
             <a>TOTO JE INDEX</a>
         </main>
-    <?php }
+    <?php endif;
 }
 include_once("./page/footer.php");
 ?>

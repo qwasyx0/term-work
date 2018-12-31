@@ -6,7 +6,6 @@ class Authentication
     static private $instance = NULL;
     static private $identity = NULL;
 
-
     static function getInstance()
     {
         if (self::$instance == NULL) {
@@ -15,14 +14,14 @@ class Authentication
         return self::$instance;
     }
 
-    private function __construct()
+    function __construct()
     {
         if (isset($_SESSION['identity'])) {
             self::$identity = $_SESSION['identity'];
         }
     }
 
-    public function login(string $email, string $password)
+    function login(string $email, string $password)
     {
         $db = new Database();
         $db->query('SELECT * FROM uzivatele WHERE email= :email and password = :password');
@@ -32,7 +31,7 @@ class Authentication
 
         if ($r != false) {
             if (count($r) > 0) {
-                $profil = array('email' => $r['email'], 'role' => $r['role']);
+                $profil = array('idciselpod' => $r['idciselpod'],'email' => $r['email'], 'role' => $r['role']);
                 $_SESSION['identity'] = $profil;
                 self::$identity = $profil;
                 return true;
@@ -44,7 +43,8 @@ class Authentication
             return false;
         }
     }
-    public function hasIdentity()
+
+    function hasIdentity()
     {
         if (self::$identity == NULL) {
             return false;
@@ -52,7 +52,7 @@ class Authentication
         return true;
     }
 
-    public function getIdentity()
+    function getIdentity()
     {
         if (self::$identity == NULL) {
             return false;
@@ -60,7 +60,7 @@ class Authentication
         return self::$identity;
     }
 
-    public function logout()
+    function logout()
     {
         unset($_SESSION['identity']);
         $_SESSION = array();
