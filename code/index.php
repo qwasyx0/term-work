@@ -11,6 +11,7 @@ function __autoload($className)
     }
     return false;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="cs">
@@ -18,16 +19,15 @@ function __autoload($className)
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/css.css">
     <title>Semestralni prace</title>
-
-
 </head>
 
 <body>
 <header>
-<?php
+    <?php
     include_once("./page/header.php");
-?>
+    ?>
 </header>
+
 <?php
 if (isset($_GET['page'])) {
     $file = "./page/" . $_GET["page"] . ".php";
@@ -37,20 +37,9 @@ if (isset($_GET['page'])) {
         include "./page/404.php";
     }
 } else {
-    if ($authService->hasIdentity()) : ?>
-        <section id="hero">
-            <div>
-                <h1>Po prihaseni</h1>
-                <h2>Semestrální práce</h2>
-                <a href="#">
-                    Dozvědět se více
-                </a>
-            </div>
-        </section>
-        <main>
-            <a>TOTO JE INDEX PO PRIHLASENI</a>
-        </main>
-    <?php  else : ?>
+    if ($authService->hasIdentity()) :
+        include "./page/import.php";
+    else : ?>
         <section id="hero">
             <div>
                 <h1>Odečty vodoměrů</h1>
@@ -60,15 +49,12 @@ if (isset($_GET['page'])) {
                 </a>
             </div>
         </section>
-
         <main>
-            <a>TOTO JE INDEX</a>
         </main>
     <?php endif;
 }
 include_once("./page/footer.php");
 ?>
-
 
 </body>
 </html>

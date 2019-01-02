@@ -18,14 +18,10 @@
             } else if (!empty($_POST)) {
                 echo "Zadejte email a heslo";
             }
-
             ?>
         </p>
     </div>
 </section>
-<main>
-    <a>TOTO JE LOGIN</a>
-</main>
 
 
 
