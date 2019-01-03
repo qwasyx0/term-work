@@ -14,22 +14,44 @@
     <div class="formular">
         <?php
         if (isset($_POST['pridani'])) {
-            try {
-                $sql = "INSERT INTO importodectu (idciselpod, datum_odectu, stav, komentar) values (:idciselpod, :datum, :stav, :komentar);";
-                $pdo->query('set names utf-8');
-                $q2 = $pdo->prepare($sql);
-                $q2->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                $q2->bindValue(":datum", $_POST['datum_odectu']);
-                $q2->bindValue(":stav", $_POST['stav']);
-                $q2->bindValue(":komentar", $_POST['komentar']);
-                $q2->execute();
-                echo 'Přidání proběhlo úspěšně.';
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
+            if (isset($_FILES['image']) && $_FILES['image']['size'] > 0) {
+                {
+                    $tmpName = $_FILES['image']['tmp_name'];
+                    $fp = fopen($tmpName, 'rb');
+                    fclose($fp);
+                }
+                try {
+                    $sql = "INSERT INTO importodectu (idciselpod, datum_odectu, stav, komentar,fotka) values (:idciselpod, :datum, :stav, :komentar, :fotka);";
+                    $pdo->query('set names utf-8');
+                    $q2 = $pdo->prepare($sql);
+                    $q2->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                    $q2->bindValue(":datum", $_POST['datum_odectu']);
+                    $q2->bindValue(":stav", $_POST['stav']);
+                    $q2->bindValue(":komentar", $_POST['komentar']);
+                    $q2->bindValue(":fotka", $fp);
+                    $q2->execute();
+                    echo 'Přidání proběhlo úspěšně.';
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
+            } else {
+                try {
+                    $sql = "INSERT INTO importodectu (idciselpod, datum_odectu, stav, komentar) values (:idciselpod, :datum, :stav, :komentar);";
+                    $pdo->query('set names utf-8');
+                    $q2 = $pdo->prepare($sql);
+                    $q2->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                    $q2->bindValue(":datum", $_POST['datum_odectu']);
+                    $q2->bindValue(":stav", $_POST['stav']);
+                    $q2->bindValue(":komentar", $_POST['komentar']);
+                    $q2->execute();
+                    echo 'Přidání proběhlo úspěšně.';
+                } catch (PDOException $e) {
+                    echo "Error: " . $e->getMessage();
+                }
             }
         }
         ?>
-        <form action="#" method="post">
+        <form action="#" method="post" enctype="multipart/form-data">
             <table>
                 <tr>
                     <td><label for="datum_odectu">Datum odečtu: </label></td>
@@ -42,30 +64,28 @@
             </table>
             <textarea id="zprava" name="komentar"></textarea>
             <br/>
+            <input id="image" name="image" type="file" />
+
             <input type="submit" value="Zapsat odečet" name="pridani" style="width:160px;">
         </form>
-
-        <form action="upload.php" method="post" enctype="multipart/form-data">
-            <input type="file" name="file_img" />
-            <input type="submit" name="btn_upload" value="Upload">
-        </form>
-        <?php
-        if(isset($_POST['btn_upload'])) {
-            //toto pujde nahoru
-            //              https://www.youtube.com/watch?v=aDWgEOhxbOo
-            //              https://www.youtube.com/watch?v=gE8FWPcigKQ
-            $filetmp = $_FILES["file_img"]["tmp_name"];
-            $filename = $_FILES["file_img"]["name"];
-            $filetype = $_FILES["file_img"]["name"];
-            $filepath = "photo/".filename;
-
-            move_uploaded_file($filetmp,$filepath);
-            $sql = "INSERT INTO upload_img (img_name,img_path,img_type) VALUES ('$filename','$filepath','$filetype')";
-            $result = mysql_query($sql);
-        }
-        ?>
+        <img id="miniatura" />
     </div>
+<script>
+    document.getElementById("image").onchange = function () {
+        var reader = new FileReader();
 
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            document.getElementById("miniatura").src = e.target.result;
+            document.getElementById("miniatura").style.height = '100px';
+            document.getElementById("miniatura").style.width = '200px';
+        };
+
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    };
+
+</script>
 <?php
     echo '</main>';
     else  : ?>
