@@ -40,16 +40,11 @@ if (isset($_GET['page'])) {
     if ($authService->hasIdentity()) :
         include "./page/import.php";
     else : ?>
-        <section id="hero">
+        <main>
             <div>
                 <h1>Odečty vodoměrů</h1>
                 <h2>Semestrální práce</h2>
-                <a href="#">
-                    Dozvědět se více
-                </a>
             </div>
-        </section>
-        <main>
         </main>
     <?php endif;
 }

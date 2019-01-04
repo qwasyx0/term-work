@@ -9,33 +9,17 @@ if ($authService->hasIdentity()) : ?>
                 input.setCustomValidity('');
             }
         }
-
     </script>
-    <?php
-    $sql = "select role, idciselpod from uzivatele where email=:email;";
-    $q = $pdo->prepare($sql);
-    $identity = $authService->getIdentity();
-    $q->bindValue(":email", $_SESSION['email']);
-    $q->execute();
-    $row = $q->fetch(PDO::FETCH_ASSOC);
-    $_SESSION['role'] = $row["role"];
-    $_SESSION['idciselpod'] = $row['idciselpod'];
-    ?>
-
     <main>
         <?php
 
         if (isset($_GET['id_smazat'])) {
             $id = $_GET['id_smazat'];
-
             $sql2 = "delete from uzivatele where email = :id";
             $q2 = $pdo->prepare($sql2);
             $q2->bindValue(":id", $id);
-
             $q2->execute();
-
         }
-
         if (isset($_GET['id_upravit'])) {
             $idemail = $_GET['id_upravit'];
 
@@ -45,7 +29,7 @@ if ($authService->hasIdentity()) : ?>
 
             $q2->execute();
             echo '<h2>Upravit uživatele <u>' . $idemail . '</u>   </h2> '
-                . '<br> <a style="color:blue;" href="index.php?page=users">Zpět na přidání uživatele.</a><br><br>';
+                . '<br> <a style="color:blue;" href="index.php?page=users">Zpět</a><br><br>';
 
         } else {
             if ($_SESSION['role'] == 1) {
@@ -53,12 +37,8 @@ if ($authService->hasIdentity()) : ?>
             }
         }
         ?>
-
-
-        <div class="formular">
-
+        <div class="formular1">
             <?php
-
             if (isset($_POST['pridani']) || isset($_POST['upravit'])) {
 
                 //join z jine tabulky
@@ -75,7 +55,7 @@ if ($authService->hasIdentity()) : ?>
                     if ($_SESSION['role'] == 1) {
                         $sql2 = "update uzivatele set  password= :password, role= :role where email = :email ";
                         $q2 = $pdo->prepare($sql2);
-                        $q2->bindValue(":email", $idemail);
+                        $q2->bindValue(":email", htmlspecialchars($idemail));
                         $q2->bindValue(":password", $hash);
                         $q2->bindValue(":role", $_POST['role']);
                         $q2->execute();
@@ -91,7 +71,7 @@ if ($authService->hasIdentity()) : ?>
                 } else {
                     $sql = "INSERT INTO uzivatele (email, password, role) values (:email, :password, :role);";
                     $q2 = $pdo->prepare($sql);
-                    $q2->bindValue(":email", $_POST['loginMail']);
+                    $q2->bindValue(":email", htmlspecialchars($_POST['loginMail']));
                     $q2->bindValue(":password", $hash);
                     $q2->bindValue(":role", $_POST['role']);
                     $q2->execute();
@@ -100,7 +80,6 @@ if ($authService->hasIdentity()) : ?>
                 }
             } else {
                 ?>
-
                 <form action="#" method="post">
 
                     <?php
@@ -148,7 +127,7 @@ if ($authService->hasIdentity()) : ?>
                                 <?php
                                 if (isset($_GET['id_upravit'])) {
                                     echo '<input type="submit" value="Upravit" name="upravit" style="width:160px;">';
-                                } else if ($row["role"] == 1) {
+                                } else if ($_SESSION['role'] == 1) {
                                     echo '<input type="submit" value="Přidat" name="pridani" style="width:160px;">';
                                 }
                                 ?>
@@ -175,8 +154,8 @@ if ($authService->hasIdentity()) : ?>
         ?>
         <h2>Uživatelské účty</h2>
 
-        <div class="formular">
-            <table>
+        <div class="formular2"style="overflow-x:auto;">
+                <table id="tablecol" cellspacing="0" cellpadding="0">
                 <tr>
                     <th>Email</th>
                     <th>Role</th>
@@ -201,17 +180,15 @@ if ($authService->hasIdentity()) : ?>
                     <td><a style="color:blue;" href="index.php?page=users&id_upravit=' . $radek["email"] . '&role=' . $radek["role"] . '&firma=' . $radek["firma"] . '&ulice=' . $radek["ulice"] . '&mesto=' . $radek["mesto"] . '">Upravit</a></td>                                                     
                      <td><a style="color:blue;" href="index.php?page=users&id_smazat=' . $radek["email"] . '">Smazat</a></td>                                                  
                 </tr> ';
-                }
+                    } ?><table></div><?php
                 } else {
                 ?>
-                <h2>Údaje uživatele</h2>
 
+                <h2>Údaje uživatele</h2>
+        <div class="formular1">
                 <table>
                     <tr>
                         <th>Email</th>
-                        <th>Firma</th>
-                        <th>Ulice</th>
-                        <th>Město</th>
                         <th>Upravit</th>
                     </tr>
                     <?php
@@ -221,17 +198,13 @@ if ($authService->hasIdentity()) : ?>
                     $q->execute();
                     while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                         echo '
-                <tr>
+                <tr id="uzivatele">
                     <td>' . $radek['email'] . '</td>                     
                     <td><a style="color:blue;" href="index.php?page=users&id_upravit=' . $radek["email"] . '">Upravit</a></td>                                                
                 </tr> ';
-
-                    }
-                    }
-                    echo '</table>';
-                    ?>
-        </div>
-
+                    }}
+                    echo '</table>'
+                    ; ?>
     </main>
 <?php else  : ?>
     <section id="asdf">

@@ -1,16 +1,8 @@
 <?php
+echo'<main>';
 if ($authService->hasIdentity()) : ?>
-    <div class="flex-wrap">
-        <section>
-            <h4>Kontakt</h4>
-            <address>Softbit software s.r.o.<br>
-                Nad Dubinkou 1634<br>
-                516 01 Rychnov nad Kněžnou<br><br>
-                Tel: +420 777 666 555<br>
-                Email: <a href="mailto:softbit@softbit.cz">
-                    sotfbit@softbit.cz</a><br>
-            </address>
-        </section>
+    <div class="full-width-wrapper">
+
         <?php
         $hlaska = '';
         if (isset($_GET['uspech']))
@@ -38,8 +30,8 @@ if ($authService->hasIdentity()) : ?>
         }
 
         ?>
-        <section>
-            <h4>Kontaktujte nás</h4>
+        <section id="kontaktujte">
+
 
             <?php
             if ($hlaska)
@@ -50,29 +42,34 @@ if ($authService->hasIdentity()) : ?>
             ?>
 
             <form method="POST">
+                <div class="formular1">
+                    <h2>Kontaktujte nás</h2>
                 <table>
                     <tr>
-                        <td>Vaše jméno</td>
+                        <td><label for="jmeno">Vaše jméno: </label></td>
                         <td><input name="jmeno" type="text" value="<?= htmlspecialchars($jmeno) ?>"/></td>
                     </tr>
                     <tr>
-                        <td>Váš email</td>
+                        <td><label for="email">Váš email: </label></td>
                         <td><input name="email" type="email" value="<?= htmlspecialchars($email) ?>"/></td>
                     </tr>
                     <tr>
-                        <td>Aktuální rok (antispam)</td>
+                        <td><label for="rok">Aktuální rok (antispam): </label></td>
                         <td><input name="rok" type="number"/></td>
                     </tr>
                 </table>
+                    <td><label for="rok">Zpráva: </label></td>
+                    <br/>
                 <textarea id="zprava" name="zprava"><?= htmlspecialchars($zprava) ?></textarea>
                 <br/>
 
                 <input type="submit" value="Odeslat"/>
+                </div>
             </form>
         </section>
     </div>
-
-<?php else  : ?>
+    <?php    echo '</main>';
+else  : ?>
     <section id="asdf">
         <h2>Pro zobrazení kontaktní stránky musíte být přihlášeni.</h2>
         <a href="<?= BASE_URL ?>">Návrat na úvodní stránku</a>

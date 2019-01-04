@@ -1,307 +1,231 @@
-    <?php
-    echo '<main>';
-    if ($authService->hasIdentity()) :
-    $sql = "select role, idciselpod from uzivatele where email=:email;";
-    $q = $pdo->prepare($sql);
-    $identity = $authService->getIdentity();
-    $q->bindValue(":email", $_SESSION['email']);
-    $q->execute();
-    $row = $q->fetch(PDO::FETCH_ASSOC);
-    $_SESSION['role'] = $row["role"];
-    $_SESSION['idciselpod'] = $row['idciselpod'];
+<?php
+echo '<main>';
+if ($authService->hasIdentity()) :
     ?>
-    <form method="post" action="#">
-        <label for="select_odecty">Vyberte:</label>
-        <select name="select_odecty" id="select_odecty">
-            <option value="odbernamista">Odběrná místa</option>
-            <option value="odecty">Odečty vodoměru</option>
-            <option value="vodomer">Vodoměr</option>
-            <option value="pohyby">Pohyby vodoměru</option>
-        </select>
-        <script type="text/javascript">
-            document.getElementById('select_odecty').value = "<?php echo $_POST['select_odecty'];?>";
-        </script>
-
-        <input type="Submit" name="submit" value="Potvrdit">
+    <div class="formular2">
+        <form method="post" action="#">
+            <label for="select_odecty">Vyberte:</label>
+            <select name="select_odecty" id="select_odecty">
+                <option value="odecty">Odečty vodoměru</option>
+                <option value="vodomer">Vodoměr</option>
+                <option value="pohyby">Pohyby vodoměru</option>
+                <option value="odbernamista">Odběrná místa</option>
+            </select>
+            <script type="text/javascript">
+                document.getElementById('select_odecty').value = "<?php echo $_POST['select_odecty'];?>";
+            </script>
+            <br/>
+            <input type="Submit" name="submit" value="Potvrdit" style="margin-top:20px">
+        </form>
         <br>
         <br>
-    </form>
-    <?php if (isset($_POST['select_odecty'])) { ?>
-    <div class="formular">
-<!--        <script src=https://www.daniweb.com/programming/web-development/threads/127658/collapse-expand-table-row"></script> > -->
-        <!-- ZKUSIT TOTO: http://www.jeasyui.com/tutorial/datagrid/datagrid21.php -->
-        <script type="text/javascript">
-            window.onload = function() {
-                var table = document.getElementById('expandable_table');
-                if (table) {
-                    var trs = table.getElementsByTagName('tr');
-                    for(var i = 0; i < trs.length; i++) {
-                        var a = trs[i].getElementsByTagName('td')[0].getElementsByTagName('a')[0];
-                        a.onclick = function() {
-                            var expand = this.parentNode.getElementsByClassName("intro")[0];
-                            expand.style.display = expand.style.display == 'none' ? 'block' : 'none';
-                            this.childNodes.nodeValue = expand.style.display == 'none' ? 'Více' : 'Méně';
-                        };
-                    }
-                }
-            };
-        </script>
-                <?php
-                switch ($_POST['select_odecty']) {
-                    case "odbernamista":
-                        ?>
-
-                        <?php
-                        $sql = "select * from VIEWODBERNAMISTA where IDCISELPOD= :idciselpod";
-                        $q = $pdo->prepare($sql);
-                        $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                        $q->execute();
-                        while ($radek = $q->fetch(PDO::FETCH_ASSOC)) { ?>
-                            <table>
-                            <div>
-                            <?php
-                            echo '
-                    <tr>
-                        <td><label for="ODBERMISTO">Odběrné místo: </label></td><td>' . $radek["ODBERMISTO"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="OBEC">Obec: </label></td><td>' . $radek["OBEC"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="ULICE_ODBERNAMISTA">Ulice: </label></td><td>' . $radek["ULICE_ODBERNAMISTA"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="CP_CE">Číslo popisné / evidenční: </label></td><td>' . $radek["CP_CE"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="CISLODOMU">Číslo domu: </label></td><td>' . $radek["CISLODOMU"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="PARCELA">Parcela: </label></td><td>' . $radek["PARCELA"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="FIRMA">Firma: </label></td><td>' . $radek["FIRMA"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="ULICE_CISELPOD">Ulice: </label></td><td>' . $radek["ULICE_CISELPOD"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="PSC">PSČ: </label></td><td>' . $radek["PSC"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="MESTO">Město: </label></td><td>' . $radek["MESTO"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="CISLO_VODOMERU">Číslo vodoměru: </label></td><td>' . $radek["CISLO_VODOMERU"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="DATUM_MONTAZ">Datum montáže vodoměru: </label></td><td>' . $radek["DATUM_MONTAZ"] . '</td>
-                    </tr>
-                    <tr>
-                        <td><label for="DRUH_VODOMERU">Druh vodoměru: </label></td><td>' . $radek["DRUH_VODOMERU"] . '</td>
-                    </tr>
-                        
-                     <?php
-                     echo ';
-                            } ?>
-                            </div>
-                            </table>
-                            <?php
-                            break;
-                        case "odecty":
-                            $sql = "select * from VIEWODECTY where idciselpod= :idciselpod";
-                            $q = $pdo->prepare($sql);
-                            $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                            $q->execute();
-                            while ($radek = $q->fetch(PDO::FETCH_ASSOC)) { ?>
-                                <table>
-                                <div>
-                                <?php
-                                echo '
-        
-                    <table id="expandable_table">
-                    <tr><td><label for="CASTKA_VCETNE_DPH">Částka včetně DPH: </label>' . $radek["CASTKA_VCETNE_DPH"] . '<label for="NOVY_STAV">Nový stav: </label>' . $radek["NOVY_STAV"] . '
-                    <a href="#">Více</a>
-                    <span class="intro" style="display:none;">
-                    <label for="ODBERMISTO">Odběrné místo: </label>' . $radek["ODBERMISTO"] . '<br/>
-                    <label for="OBEC">Obec: </label>' . $radek["OBEC"] . '<br/>
-                    <label for="ULICE_ODBERNAMISTA">Ulice: </label>' .  $radek["ULICE_ODBERNAMISTA"] . '</br/>
-                    <label for="CP_CE">Číslo popisné / evidenční: </label>' . $radek["CP_CE"] . '</br/>
-                    
-                    </span>           
-                    </p></tr>
-                </table>
-                        <tr>
-                            <td><label for="OBDOBI_OD">Období od: </label></td><td>' . $radek["OBDOBI_OD"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="OBDOBI_DO">Období do: </label></td><td>' . $radek["OBDOBI_DO"] . '</td>
-                        </tr>
-                        <tr>
-                                <td><label for="NOVY_STAV">Nový stav: </label></td><td>' . $radek["NOVY_STAV"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="PREDCHOZI_STAV">Předochozí stav: </label></td><td>' . $radek["PREDCHOZI_STAV"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="CASTKA_BEZ_DPH">Částka bez DPH: </label></td><td>' . $radek["CASTKA_BEZ_DPH"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="CASTKA_VCETNE_DPH">Částka včetně DPH: </label></td><td>' . $radek["CASTKA_VCETNE_DPH"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="CISLO_VODOMERU">Číslo vodoěru: </label></td><td>' . $radek["CISLO_VODOMERU"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="ROK_PRISTI_REVIZE">Rok příští revize: </label></td><td>' . $radek["ROK_PRISTI_REVIZE"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="DRUH_VODOMERU">Druh vodoměru: </label></td><td>' . $radek["DRUH_VODOMERU"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="FIRMA">Firma: </label></td><td>' . $radek["FIRMA"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="ULICE_CISELPOD">Ulice sídlo: </label></td><td>' . $radek["ULICE_CISELPOD"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="PSC">PSČ: </label></td><td>' . $radek["PSC"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="MESTO">Město: </label></td><td>' . $radek["MESTO"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="ODBERMISTO">Odběrné místo: </label></td><td>' . $radek["ODBERMISTO"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="TYP_SAZBY">Typ sazby: </label></td><td>' . $radek["TYP_SAZBY"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="OBEC">Obec: </label></td><td>' . $radek["OBEC"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="ULICE_ODBERNAMISTA">Ulice odběrné místo: </label></td><td>' . $radek["ULICE_ODBERNAMISTA"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="CP_CE">Číslo popisné / evidenční: </label></td><td>' . $radek["CP_CE"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="CISLODOMU">Číslo domu: </label></td><td>' . $radek["CISLODOMU"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="PARCELA">Parcela: </label></td><td>' . $radek["PARCELA"] . '</td>
-                        </tr>
-                        
-                     <?php
-                     echo ';
-                            } ?>
-                            </div>
-                            </table>
-                            <?php
-                            break;
-                        case "pohyby":
-                            $sql = "select * from VIEWPOHYBY where idciselpod= :idciselpod";
-                            $q = $pdo->prepare($sql);
-                            $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                            $q->execute();
-                            while ($radek = $q->fetch(PDO::FETCH_ASSOC)) { ?>
-
-                                <table>
-                                <div>
-                                <?php
-
-                                echo '
-                        <tr>
-                            <td><label for="DATUM_POHYBU">Datum pohybu: </label></td><td>' . $radek["DATUM_POHYBU"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="DRUH_POHYBU">Druh pohybu: </label></td><td>' . $radek["DRUH_POHYBU"] . '</td>
-                        </tr>
-                        <tr>
-                                <td><label for="POPIS_POHYBU">Popis pohybu: </label></td><td>' . $radek["POPIS_POHYBU"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="CISLO_VODOMERU">Číslo vodoměru: </label></td><td>' . $radek["CISLO_VODOMERU"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="DRUH_VODOMERU">Druh vodoměru: </label></td><td>' . $radek["DRUH_VODOMERU"] . '</td>
-                        </tr>
-                       
-                     <?php
-                     echo ';
-                            } ?>
-                            </div>
-                            </table>
-                            <?php
-                            break;
-                        case "vodomer":
-                            $sql = "select * from VIEWVODOMERY where idciselpod= :idciselpod";
-                            $q = $pdo->prepare($sql);
-                            $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                            $q->execute();
-                            while ($radek = $q->fetch(PDO::FETCH_ASSOC)) { ?>
-
-                                <table>
-                                <div>
-                                <?php
-
-                                echo '
-                        <tr>
-                            <td><label for="CISLO_VODOMERU">Číslo vodoěru: </label></td><td>' . $radek["CISLO_VODOMERU"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="ROK_PRISTI_REVIZE">Rok příští revize: </label></td><td>' . $radek["ROK_PRISTI_REVIZE"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="DATUM_MONTAZ">Datum montáže vodoměru: </label></td><td>' . $radek["DATUM_MONTAZ"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="DRUH_VODOMERU">Druh vodoměru: </label></td><td>' . $radek["DRUH_VODOMERU"] . '</td>
-                        </tr>
-                        
-                        <tr>
-                            <td><label for="ODBERMISTO">Odběrné místo: </label></td><td>' . $radek["ODBERMISTO"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="OBEC">Obec: </label></td><td>' . $radek["OBEC"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="ULICE_ODBERNAMISTA">Ulice odběrné místo: </label></td><td>' . $radek["ULICE_ODBERNAMISTA"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="CP_CE">Číslo popisné / evidenční: </label></td><td>' . $radek["CP_CE"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="CISLODOMU">Číslo domu: </label></td><td>' . $radek["CISLODOMU"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="PARCELA">Parcela: </label></td><td>' . $radek["PARCELA"] . '</td>
-                        </tr>
-                       <tr>
-                            <td><label for="FIRMA">Firma: </label></td><td>' . $radek["FIRMA"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="ULICE_CISELPOD">Ulice sídlo: </label></td><td>' . $radek["ULICE_CISELPOD"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="PSC">PSČ: </label></td><td>' . $radek["PSC"] . '</td>
-                        </tr>
-                        <tr>
-                            <td><label for="MESTO">Město: </label></td><td>' . $radek["MESTO"] . '</td>
-                        </tr>
-                     <?php
-                     echo ';
-                            } ?>
-                            </div>
-                            </table>
-                            <?php
-                            break;
-                    }
-            }
-            ?>
-
+        </form>
     </div>
-</main>
+    <div class="formular">
+    <?php if (isset($_POST['select_odecty'])) {
+    switch ($_POST['select_odecty']) {
+        case "odbernamista": ?>
+            <div style="overflow-x:auto;">
+                <table id="tablecol" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th>Odběrné místo:</th>
+                        <th>Obec:</th>
+                        <th>Ulice:</th>
+                        <th>Číslo popisné / evidenční:</th>
+                        <th>Číslo domu:</th>
+                        <th>Parcela:</th>
+                        <th>Firma:</th>
+                        <th>Ulice sídlo:</th>
+                        <th>PSČ:</th>
+                        <th>Město:</th>
+                        <th>Číslo vodoměru:</th>
+                        <th>Datum montáže vodoměru:</th>
+                        <th>Druh vodoměru:</th>
+                    </tr>
+                    <?php
+                    if ($_SESSION['role'] == 1) {
+                        $sql = "select * from VIEWODBERNAMISTA";
+                    } else {
+                        $sql = "select * from VIEWODBERNAMISTA where IDCISELPOD= :idciselpod";
+                    }
+                    $q = $pdo->prepare($sql);
+                    $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                    $q->execute();
+                    while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                        echo '
+                                <tr>
+                                    <td>' . $radek["ODBERMISTO"] . '</td>
+                                    <td>' . $radek["OBEC"] . '</td>
+                                    <td>' . $radek["ULICE_ODBERNAMISTA"] . '</td>
+                                    <td>' . $radek["CP_CE"] . '</td>
+                                    <td>' . $radek["CISLODOMU"] . '</td>                                 
+                                    <td>' . $radek["PARCELA"] . '</td>                                    
+                                    <td>' . $radek["FIRMA"] . '</td>
+                                    <td>' . $radek["ULICE_CISELPOD"] . '</td>
+                                    <td>' . $radek["PSC"] . '</td>                                    
+                                    <td>' . $radek["MESTO"] . '</td>
+                                    <td>' . $radek["CISLO_VODOMERU"] . '</td>
+                                    <td>' . date("d.m.Y", strtotime($radek["DATUM_MONTAZ"])) . '</td>
+                                    <td>' . $radek["DRUH_VODOMERU"] . '</td>
+                                </tr> ';
+                    } ?>
+                </table>
+            </div>
+            <?php
+                break;
+        case "odecty": ?>
+            <div style="overflow-x:auto;">
+                <table id="tablecol" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th>Období od:</th>
+                        <th>Období do:</th>
+                        <th>Nový stav:</th>
+                        <th>Předochozí stav:</th>
+                        <th>Částka bez DPH:</th>
+                        <th>Částka včetně DPH:</th>
+                        <th>Číslo vodoměru:</th>
+                        <th>Rok příští revize:</th>
+                        <th>Druh vodoměru:</th>
+                        <th>Firma:</th>
+                        <th>Ulice sídlo:</th>
+                        <th>PSČ:</th>
+                        <th>Město:</th>
+                        <th>Odběrné místo:</th>
+                        <th>Typ sazby:</th>
+                        <th>Obec:</th>
+                        <th>Ulice odběrné místo:</th>
+                        <th>Číslo popisné / evidenční:</th>
+                        <th>Číslo domu:</th>
+                        <th>Parcela:</th>
+                    </tr>
+                    <?php
+                    if ($_SESSION['role'] == 1) {
+                        $sql = "select * from VIEWODECTY order by NOVY_STAV asc";
+                    } else {
+                        $sql = "select * from VIEWODECTY where idciselpod= :idciselpod order by NOVY_STAV asc";
+                    }
+                    $q = $pdo->prepare($sql);
+                    $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                    $q->execute();
+                    while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                        echo '
+                                <tr>
+                                    <td>' . date("d.m.Y", strtotime($radek["OBDOBI_OD"])) . '</td>
+                                    <td>' . date("d.m.Y", strtotime($radek["OBDOBI_DO"])) . '</td>
+                                    <td>' . $radek["NOVY_STAV"] . '</td>
+                                    <td>' . $radek["PREDCHOZI_STAV"] . '</td>
+                                    <td>' . $radek["CASTKA_BEZ_DPH"] . '</td>                                 
+                                    <td>' . $radek["CASTKA_VCETNE_DPH"] . '</td>                                    
+                                    <td>' . $radek["CISLO_VODOMERU"] . '</td>
+                                    <td>' . $radek["ROK_PRISTI_REVIZE"] . '</td>
+                                    <td>' . $radek["DRUH_VODOMERU"] . '</td>                                    
+                                    <td>' . $radek["FIRMA"] . '</td>
+                                    <td>' . $radek["ULICE_CISELPOD"] . '</td>
+                                    <td>' . $radek["PSC"] . '</td>
+                                    <td>' . $radek["MESTO"] . '</td>
+                                    <td>' . $radek["ODBERMISTO"] . '</td>
+                                    <td>' . $radek["TYP_SAZBY"] . '</td>
+                                    <td>' . $radek["OBEC"] . '</td>
+                                    <td>' . $radek["ULICE_ODBERNAMISTA"] . '</td>
+                                    <td>' . $radek["CP_CE"] . '</td>
+                                    <td>' . $radek["CISLODOMU"] . '</td>
+                                    <td>' . $radek["PARCELA"] . '</td>
+                                </tr> ';
+                    } ?>
+                </table>
+            </div>
+            <a  href="<?= BASE_URL . "?page=xml" ?>"style="color:blue;font-size:18px;">Export odečtů do xml</a>
+            <?php break;
+        case "pohyby": ?>
+            <div id="divpohyby">
+                <table id="tablecol" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th>Datum pohybu:</th>
+                        <th>Druh pohybu:</th>
+                        <th>Popis pohybu:</th>
+                        <th>Číslo vodoměru:</th>
+                        <th>Druh vodoměru:</th>
+                    </tr>
+
+                    <?php
+                    if ($_SESSION['role'] == 1) {
+                        $sql = "select * from VIEWPOHYBY";
+                    } else {
+                        $sql = "select * from VIEWPOHYBY where idciselpod= :idciselpod";
+                    }
+                    $q = $pdo->prepare($sql);
+                    $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                    $q->execute();
+                    while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                        echo '
+                                <tr>
+                                    <td>' . date("d.m.Y", strtotime($radek["DATUM_POHYBU"])) . '</td>
+                                    <td>' . $radek["DRUH_POHYBU"] . '</td>
+                                    <td>' . $radek["POPIS_POHYBU"] . '</td>
+                                    <td>' . $radek["CISLO_VODOMERU"] . '</td>
+                                    <td>' . $radek["DRUH_VODOMERU"] . '</td>                                 
+                                </tr> ';
+                    } ?>
+                </table>
+            </div>
+            <?php break;
+        case "vodomer":
+            ?>
+            <div style="overflow-x:auto;">
+                <table id="tablecol" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th>Číslo vodoměru:</th>
+                        <th>Rok příští revize:</th>
+                        <th>Datum montáže vodoměru:</th>
+                        <th>Druh vodoměru:</th>
+                        <th>Obec:</th>
+                        <th>Ulice odběrné místo:</th>
+                        <th>Číslo popisné / evidenční:</th>
+                        <th>Číslo domu:</th>
+                        <th>Parcela:</th>
+                        <th>Firma:</th>
+                        <th>Ulice sídlo:</th>
+                        <th>PSČ:</th>
+                        <th>Město:</th>
+                    </tr>
+                    <?php
+
+                    if ($_SESSION['role'] == 1) {
+                        $sql = "select * from VIEWVODOMERY";
+                    } else {
+                        $sql = "select * from VIEWVODOMERY where idciselpod= :idciselpod";
+                    }
+                    $q = $pdo->prepare($sql);
+                    $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                    $q->execute();
+                    while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                        echo '
+                                <tr>
+                                    <td>' . $radek["CISLO_VODOMERU"] . '</td>
+                                    <td>' . $radek["ROK_PRISTI_REVIZE"] . '</td>
+                                    <td>' . date("d.m.Y", strtotime($radek["DATUM_MONTAZ"])) . '</td>
+                                    <td>' . $radek["DRUH_VODOMERU"] . '</td>  
+                                    <td>' . $radek["OBEC"] . '</td>
+                                    <td>' . $radek["ULICE_ODBERNAMISTA"] . '</td>
+                                    <td>' . $radek["CP_CE"] . '</td>
+                                    <td>' . $radek["CISLODOMU"] . '</td>
+                                    <td>' . $radek["PARCELA"] . '</td> 
+                                    <td>' . $radek["FIRMA"] . '</td>
+                                    <td>' . $radek["ULICE_CISELPOD"] . '</td>
+                                    <td>' . $radek["PSC"] . '</td>  
+                                    <td>' . $radek["MESTO"] . '</td>   
+                                </tr> ';
+                    } ?>
+                </table>
+            </div>
+            <?php break;
+    } ?>
+    </div>
+    <?php
+}
+    ?>
+    </div>
+    </main>
 <?php else  : ?>
     <section id="asdf">
         <h2>Pro zobrazení historie odečtů musíte být přihlášeni.</h2>

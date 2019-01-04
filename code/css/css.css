@@ -4,11 +4,40 @@ body, html {
     background-color: #fff;
     font-family: 'Ubuntu', sans-serif;
 }
+main  {
+    height:100%;
+    width: 960px;
+    margin: auto;
+    text-align: center;
+}
+main h2 {
+    text-align: center;
+}
+main h1 {
+    text-align: center;
+    font-size: 5em;
+}
+main #dozvedet {
+    text-align: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-radius: 30px;
+    color: #014994;
+    border: 2px solid #014994;
+    text-decoration:none;
 
+
+}
+main #dozvedet:hover {
+    background-color: #014994;
+    color: white;
+    border: 2px solid #014994;
+    transition: color 400ms, background-color 400ms, border-color 400ms;
+    text-decoration: none;
+}
 header {
     font-family: 'Ubuntu', sans-serif;
     width: 100%;
-    /*position: fixed;*/
     z-index: 1;
     display: flex;
     align-items: center;
@@ -27,41 +56,20 @@ header nav a {
     text-decoration:none;
 
 }
+header nav span {
+    position: absolute;
+    right: 0;
+    font-size: 13px;
+    padding: 3px;
+    text-align: center;
+
+}
 header nav a:hover {
     background-color: #014994;
     color: white;
     transition: color 400ms, background-color 400ms, border-color 400ms;
 }
-#asdf {
-    height: 100%;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    display: block;
-    max-width: 960px;
-    position: relative;
-    margin:auto;
-}
-#asdf h1 {
-    font-size: 5em;
-}
 
-#asdf a {
-    padding: 10px 20px;
-    background-color: white;
-    border-radius: 30px;
-    color: RED;
-    border: 2px solid RED;
-    text-decoration:none;
-}
-
-#asdf a:hover {
-    background-color: RED;
-    color: white;
-    border: 2px solid RED;
-    transition: color 400ms, background-color 400ms, border-color 400ms;
-    text-decoration:none;
-}
 #hero {
     height: 100%;
     text-align: center;
@@ -93,19 +101,13 @@ header nav a:hover {
 footer {
     font-family: 'Ubuntu', sans-serif;
     text-align: center;
-    padding: 10px 0;
     display: flex;
-    left: 0;
-    bottom: 0;
-    width: 100%;
     background-color: #e9eaed;
-    float: none;
     position: relative;
 }
 
 .full-width-wrapper, main {
-    width: 960px;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .flex-wrap {
@@ -121,14 +123,77 @@ footer {
     padding: 6px 8px 6px 8px;
     width: 400px;
     height: 110px;
+    margin-top: 10px;
+}
+
+.formular1 {
+    text-align: center;
+
+
+}
+
+.formular1 label{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+}
+
+.formular1 input [type=input]{
+    width:150px;
+    height:30px;
+    padding-left:5px;
+    border-radius: 2px;
+    border:1px solid rgb(10,10,10);
+    margin:5px;
+}
+.formular1 input[type=submit]{
+    width:160px;
+    border-radius: 3px 3px 3px 3px;
+    border:1px solid rgb(100,100,100);
+    background-image: linear-gradient(rgb(0,0,0), rgb(100,100,100));
+    color:white;
+    margin-top:5px;
+    cursor: pointer;
+}
+
+.formular1 input[type=file]{
+    margin-top:5px;
+}
+
+.formular1 table {
+    margin: 0 auto;
+    text-align: center;
+}
+.formular1 th{
+
+    padding:5px;
+    text-align: left;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    color:black;
+    border-bottom: 1px solid #ddd;
+
+}
+.formular1 td{
+
+    padding:5px;
+    text-align: left;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    color:black;
+    border-bottom: 1px solid #ddd;
+
 }
 
 .formular {
-    display: inline-block;
+    white-space: nowrap;
+    display: block;
     margin:auto;
-    width:960px;
     margin-bottom:80px;
+    border-collapse: collapse;
+    max-width: 960px;
+    overflow: hidden;
 }
+
 .formular label{
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
@@ -142,6 +207,7 @@ footer {
     border:1px solid rgb(10,10,10);
     margin:5px;
 }
+
 .formular input[type=submit]{
     width:160px;
     border-radius: 3px 3px 3px 3px;
@@ -152,13 +218,15 @@ footer {
     margin-top:5px;
 }
 
+
 .formular th{
     padding:5px;
     text-align: left;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
     color:black;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid black;
+    background:#f07c01;
 }
 
 .formular td{
@@ -167,10 +235,96 @@ footer {
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
     color:black;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid black;
 }
+
+.formular tr:hover{
+    background-color:#b8d1f3
+
+}
+.formular tr:nth-child(odd){background:grey}
 
 
 #select_odecty {
     margin-top: 50px;
+}
+
+#kontakt{
+    width:220px;
+    margin-left:30px;
+    float:right;
+}
+
+#kontakt h2{
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+
+
+.formular2 {
+    text-align: center;
+    margin:auto;
+    width:960px;
+
+
+
+
+}
+
+.formular2 label{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+}
+
+.formular2 input [type=input]{
+    width:150px;
+    height:30px;
+    padding-left:5px;
+    border-radius: 2px;
+    border:1px solid rgb(10,10,10);
+    margin:5px;
+}
+.formular2 input[type=submit]{
+    width:160px;
+    border-radius: 3px 3px 3px 3px;
+    border:1px solid rgb(100,100,100);
+    background-image: linear-gradient(rgb(0,0,0), rgb(100,100,100));
+    color:white;
+    margin:0;
+    margin-top:5px;
+    cursor: pointer;
+}
+
+.formular2 input[type=file]{
+    margin-top:5px;
+}
+
+.formular2 th{
+
+    padding:5px;
+    text-align: left;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    color:black;
+    border-bottom: 1px solid #ddd;
+
+}
+.formular2 td{
+
+    padding:5px;
+    text-align: left;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    color:black;
+    border-bottom: 1px solid #ddd;
+
+}
+
+#divpohyby{
+    display: flex;
+
+    justify-content: center;
+
+
 }

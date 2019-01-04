@@ -1,17 +1,9 @@
     <?php
     echo'<main>';
     if ($authService->hasIdentity()) :
-    $sql = "select role, idciselpod from uzivatele where email=:email;";
-    $q = $pdo->prepare($sql);
-    $identity = $authService->getIdentity();
-    $q->bindValue(":email", $_SESSION['email']);
-    $q->execute();
-    $row = $q->fetch(PDO::FETCH_ASSOC);
-    $_SESSION['role'] = $row["role"];
-    $_SESSION['idciselpod'] = $row['idciselpod'];
     ?>
     <h2>Zadejte údaje z vodoměru</h2>
-    <div class="formular">
+    <div class="formular1">
         <?php
         if (isset($_POST['pridani'])) {
             if (isset($_FILES['image']) && $_FILES['image']['size'] > 0) {
@@ -27,7 +19,7 @@
                     $q2->bindValue(":idciselpod", $_SESSION['idciselpod']);
                     $q2->bindValue(":datum", $_POST['datum_odectu']);
                     $q2->bindValue(":stav", $_POST['stav']);
-                    $q2->bindValue(":komentar", $_POST['komentar']);
+                    $q2->bindValue(":komentar", htmlspecialchars($_POST['komentar']));
                     $q2->bindValue(":fotka", $fp);
                     $q2->execute();
                     echo 'Přidání proběhlo úspěšně.';
@@ -64,11 +56,14 @@
             </table>
             <textarea id="zprava" name="komentar"></textarea>
             <br/>
-            <input id="image" name="image" type="file" />
-
-            <input type="submit" value="Zapsat odečet" name="pridani" style="width:160px;">
+            <label for="image" style="position: ;">Připojit fotku (nepovinné): </label>
+            <input id="image" name="image" type="file">
+            <br/>
+            <img id="miniatura">
+            <br/>
+            <input type="submit" value="Zapsat odečet" name="pridani" style="width:160px; margin-top:10px;">
         </form>
-        <img id="miniatura" />
+
     </div>
 <script>
     document.getElementById("image").onchange = function () {

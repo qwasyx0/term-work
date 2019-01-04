@@ -1,7 +1,7 @@
 <?php
 session_destroy(); ?>
-<section id="hero">
+<main style="margin-top: 30px;">
     <?php
-echo 'Byli jste odhlášeni. <a href="./index.php">Úvodní stránka</a>'; ?>
-</section>
+echo 'Byli jste odhlášeni. <a href="./index.php">Přejít na úvodní stránku</a>'; ?>
+</main>
 
