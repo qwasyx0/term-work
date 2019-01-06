@@ -22,7 +22,7 @@ $authService = Authentication::getInstance();
             <a href="<?= BASE_URL . "?page=import" ?>">Import odečtu</a>
             <a href="<?= BASE_URL . "?page=odecty" ?>">Prohlížení odečtů</a>
             <a href="<?= BASE_URL . "?page=users" ?>">Nastavení</a>
-            <a href="<?= BASE_URL . "?page=kontakt" ?>">Kontakt</a>
+            <!-- <a href="<?= BASE_URL . "?page=kontakt" ?>">Kontakt</a> -->
             <a href="<?= BASE_URL . "?page=logout" ?>">Odhlásit</a>
             <span>Jste přihlášen jako:<br/><?php echo $_SESSION["email"]; ?><br/>Role:<?php echo $roleslovne; ?></span>
         <?php else : ?>

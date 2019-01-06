@@ -59,12 +59,16 @@ if ($authService->hasIdentity()) :
             <label for="image" style="position: ;">Připojit fotku (nepovinné): </label>
             <input id="image" name="image" type="file">
             <br/>
-            <img id="miniatura">
+            <img id="miniatura" src="">
             <br/>
             <input type="submit" value="Zapsat odečet" name="pridani" style="width:160px; margin-top:10px;">
         </form>
 
     </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
     <script>
         document.getElementById("image").onchange = function () {
             var reader = new FileReader();
@@ -76,6 +80,45 @@ if ($authService->hasIdentity()) :
             reader.readAsDataURL(this.files[0]);
         };
     </script>
+            <div class="formular">
+    <h2>Vaše importované odečty</h2>
+
+    <div id="divpohyby">
+        <table id="tablecol" cellspacing="0" cellpadding="0">
+            <tr>
+                <th>Stav:</th>
+                <th>Datum odečtu:</th>
+                <th>Komentář:</th>
+                <th>Upravit</th>
+            </tr>
+
+            <?php
+
+            if ($_SESSION['role'] == 1) {
+                $sql = "select * from importodectu";
+            } else {
+                $sql = "select * from importodectu where idciselpod= :idciselpod";
+            }
+            try {
+                $q = $pdo->prepare($sql);
+                $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                $q->execute();
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+            while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                echo '
+                                <tr>
+                                    <td>' . $radek["STAV"] . '</td>   
+                                    <td>' . date("d.m.Y", strtotime($radek["DATUM_ODECTU"])) . '</td>
+                                    <td>' . $radek["KOMENTAR"] . '</td>    
+                                    <td><a style="color:blue;" href="index.php?page=import&id_upravit=' . $radek["STAV"] . '&DATUM_ODECTU=' . $radek["DATUM_ODECTU"] . '&KOMENTAR=' . $radek["KOMENTAR"] . '">Upravit</a></td>                                                        
+                                          
+                                </tr> ';
+            } ?>
+        </table>
+    </div>
+            </div>
     <?php
     echo '</main>';
 else  : ?>
