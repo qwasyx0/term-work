@@ -16,7 +16,6 @@ if ($_SESSION['role'] == 1){
     $roleslovne = " běžný uživatel";
 }
 ?>
-<header>
     <!-- <div id="header-web-title">Odečty vodoměrů</div>
      <img id="header-logo" src="images/logo.jpg"/> -->
     <nav id="nav">
@@ -32,4 +31,3 @@ if ($_SESSION['role'] == 1){
             <a href="<?= BASE_URL . "?page=login" ?>">Přihlásit</a>
         <?php endif; ?>
     </nav>
-</header>

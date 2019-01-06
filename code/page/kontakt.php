@@ -2,7 +2,6 @@
 echo'<main>';
 if ($authService->hasIdentity()) : ?>
     <div class="full-width-wrapper">
-
         <?php
         $hlaska = '';
         if (isset($_GET['uspech']))
@@ -28,11 +27,8 @@ if ($authService->hasIdentity()) : ?>
             } else
                 $hlaska = 'Formulář není správně vyplněný!';
         }
-
         ?>
         <section id="kontaktujte">
-
-
             <?php
             if ($hlaska)
                 echo('<p>' . htmlspecialchars($hlaska) . '</p>');
@@ -62,7 +58,6 @@ if ($authService->hasIdentity()) : ?>
                     <br/>
                 <textarea id="zprava" name="zprava"><?= htmlspecialchars($zprava) ?></textarea>
                 <br/>
-
                 <input type="submit" value="Odeslat"/>
                 </div>
             </form>

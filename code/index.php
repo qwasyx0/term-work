@@ -47,10 +47,14 @@ if (isset($_GET['page'])) {
             </div>
         </main>
     <?php endif;
-}
-include_once("./page/footer.php");
-?>
 
+}
+?>
+<footer>
+    <?php
+    include_once("./page/footer.php");
+    ?>
+</footer>
 </body>
 </html>
 

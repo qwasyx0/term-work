@@ -2,29 +2,32 @@
 echo '<main>';
 if ($authService->hasIdentity()) :
     ?>
-    <div class="formular2">
-        <form method="post" action="#">
-            <label for="select_odecty">Vyberte:</label>
-            <select name="select_odecty" id="select_odecty">
-                <option value="odecty">Odečty vodoměru</option>
-                <option value="vodomer">Vodoměr</option>
-                <option value="pohyby">Pohyby vodoměru</option>
-                <option value="odbernamista">Odběrná místa</option>
-            </select>
-            <script type="text/javascript">
-                document.getElementById('select_odecty').value = "<?php echo $_POST['select_odecty'];?>";
-            </script>
-            <br/>
-            <input type="Submit" name="submit" value="Potvrdit" style="margin-top:20px">
-        </form>
-        <br>
-        <br>
-        </form>
+    <div id="noprint">
+        <div class="formular1">
+            <form method="post" action="#">
+                <label for="select_odecty">Vyberte:</label>
+                <select name="select_odecty" id="select_odecty">
+                    <option value="odecty">Odečty vodoměru</option>
+                    <option value="vodomer">Vodoměr</option>
+                    <option value="pohyby">Pohyby vodoměru</option>
+                    <option value="odbernamista">Odběrná místa</option>
+                </select>
+                <script type="text/javascript">
+                    document.getElementById('select_odecty').value = "<?php echo $_POST['select_odecty'];?>";
+                </script>
+                <br/>
+                <input type="Submit" name="submit" value="Potvrdit" style="margin-top:20px">
+            </form>
+            <br>
+            <br>
+            </form>
+        </div>
     </div>
     <div class="formular">
     <?php if (isset($_POST['select_odecty'])) {
     switch ($_POST['select_odecty']) {
         case "odbernamista": ?>
+            <h2>Odběrná místa</h2>
             <div style="overflow-x:auto;">
                 <table id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
@@ -48,9 +51,13 @@ if ($authService->hasIdentity()) :
                     } else {
                         $sql = "select * from VIEWODBERNAMISTA where IDCISELPOD= :idciselpod";
                     }
-                    $q = $pdo->prepare($sql);
-                    $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                    $q->execute();
+                    try {
+                        $q = $pdo->prepare($sql);
+                        $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                        $q->execute();
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
                     while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                         echo '
                                 <tr>
@@ -72,8 +79,9 @@ if ($authService->hasIdentity()) :
                 </table>
             </div>
             <?php
-                break;
+            break;
         case "odecty": ?>
+            <h2>Odečty vodoměru</h2>
             <div style="overflow-x:auto;">
                 <table id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
@@ -104,12 +112,16 @@ if ($authService->hasIdentity()) :
                     } else {
                         $sql = "select * from VIEWODECTY where idciselpod= :idciselpod order by NOVY_STAV asc";
                     }
-                    $q = $pdo->prepare($sql);
-                    $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                    $q->execute();
+                    try {
+                        $q = $pdo->prepare($sql);
+                        $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                        $q->execute();
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
                     while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                         echo '
-                                <tr>
+                                <tr >
                                     <td>' . date("d.m.Y", strtotime($radek["OBDOBI_OD"])) . '</td>
                                     <td>' . date("d.m.Y", strtotime($radek["OBDOBI_DO"])) . '</td>
                                     <td>' . $radek["NOVY_STAV"] . '</td>
@@ -134,9 +146,10 @@ if ($authService->hasIdentity()) :
                     } ?>
                 </table>
             </div>
-            <a  href="<?= BASE_URL . "?page=xml" ?>"style="color:blue;font-size:18px;">Export odečtů do xml</a>
+            <a href="<?= BASE_URL . "?page=xml" ?>" style="color:blue;font-size:18px;">Export odečtů do xml</a>
             <?php break;
         case "pohyby": ?>
+            <h2>Pohyby vodoměru</h2>
             <div id="divpohyby">
                 <table id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
@@ -153,9 +166,13 @@ if ($authService->hasIdentity()) :
                     } else {
                         $sql = "select * from VIEWPOHYBY where idciselpod= :idciselpod";
                     }
-                    $q = $pdo->prepare($sql);
-                    $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                    $q->execute();
+                    try {
+                        $q = $pdo->prepare($sql);
+                        $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                        $q->execute();
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
                     while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                         echo '
                                 <tr>
@@ -171,6 +188,7 @@ if ($authService->hasIdentity()) :
             <?php break;
         case "vodomer":
             ?>
+            <h2>Údaje vodoměru</h2>
             <div style="overflow-x:auto;">
                 <table id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
@@ -195,9 +213,13 @@ if ($authService->hasIdentity()) :
                     } else {
                         $sql = "select * from VIEWVODOMERY where idciselpod= :idciselpod";
                     }
-                    $q = $pdo->prepare($sql);
-                    $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
-                    $q->execute();
+                    try {
+                        $q = $pdo->prepare($sql);
+                        $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                        $q->execute();
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
                     while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                         echo '
                                 <tr>

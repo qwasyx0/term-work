@@ -1,4 +1,3 @@
-<footer>
     <div class="full-width-wrapper">
         <section>
             <p>
@@ -10,4 +9,3 @@
             </p>
         </section>
     </div>
-</footer>

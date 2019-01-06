@@ -25,8 +25,6 @@ main #dozvedet {
     color: #014994;
     border: 2px solid #014994;
     text-decoration:none;
-
-
 }
 main #dozvedet:hover {
     background-color: #014994;
@@ -128,8 +126,6 @@ footer {
 
 .formular1 {
     text-align: center;
-
-
 }
 
 .formular1 label{
@@ -144,15 +140,26 @@ footer {
     border-radius: 2px;
     border:1px solid rgb(10,10,10);
     margin:5px;
-}
-.formular1 input[type=submit]{
-    width:160px;
-    border-radius: 3px 3px 3px 3px;
-    border:1px solid rgb(100,100,100);
-    background-image: linear-gradient(rgb(0,0,0), rgb(100,100,100));
-    color:white;
-    margin-top:5px;
     cursor: pointer;
+}
+
+.formular1 input[type="submit"]{
+    text-align: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-radius: 30px;
+    color: #014994;
+    border: 2px solid #014994;
+    text-decoration:none;
+    cursor: pointer;
+}
+
+.formular1 input [type="submit"]:hover {
+    background-color: #014994;
+    color: white;
+    border: 2px solid #014994;
+    transition: color 400ms, background-color 400ms, border-color 400ms;
+    text-decoration: none;
 }
 
 .formular1 input[type=file]{
@@ -224,9 +231,9 @@ footer {
     text-align: left;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
-    color:black;
+    color:white;
     border-bottom: 1px solid black;
-    background:#f07c01;
+    background:#014994;
 }
 
 .formular td{
@@ -239,10 +246,10 @@ footer {
 }
 
 .formular tr:hover{
-    background-color:#b8d1f3
+    background-color:#eee
 
 }
-.formular tr:nth-child(odd){background:grey}
+.formular tr:nth-child(odd){background:#eee}
 
 
 #select_odecty {
@@ -260,16 +267,10 @@ footer {
     margin-bottom: 20px;
 }
 
-
-
 .formular2 {
     text-align: center;
     margin:auto;
     width:960px;
-
-
-
-
 }
 
 .formular2 label{
@@ -301,7 +302,6 @@ footer {
 }
 
 .formular2 th{
-
     padding:5px;
     text-align: left;
     font-size: 16px;
@@ -311,20 +311,70 @@ footer {
 
 }
 .formular2 td{
-
     padding:5px;
     text-align: left;
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
     color:black;
     border-bottom: 1px solid #ddd;
-
 }
 
 #divpohyby{
     display: flex;
-
     justify-content: center;
+}
 
+@media print {
+    body > header{
+        visibility:  hidden;
+        display: none;
+    }
+
+    body > footer{
+        visibility:  hidden;
+        display: none;
+
+    }
+    #noprint {
+        visibility:  hidden;
+        display: none;
+}
+}
+
+@media print  {
+
+    /* Force table to not be like tables anymore */
+    table, thead, tbody, th, td, tr {
+        font-size: 14px;
+        text-shadow: none;
+    }
+
+    /* Hide table headers (but not display: none;, for accessibility) */
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr { border: 1px solid #ccc; }
+
+    td {
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+    }
 
 }

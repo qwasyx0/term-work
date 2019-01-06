@@ -1,6 +1,6 @@
-    <?php
-    echo'<main>';
-    if ($authService->hasIdentity()) :
+<?php
+echo '<main>';
+if ($authService->hasIdentity()) :
     ?>
     <h2>Zadejte údaje z vodoměru</h2>
     <div class="formular1">
@@ -65,25 +65,20 @@
         </form>
 
     </div>
-<script>
-    document.getElementById("image").onchange = function () {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            // get loaded data and render thumbnail.
-            document.getElementById("miniatura").src = e.target.result;
-            document.getElementById("miniatura").style.height = '100px';
-            document.getElementById("miniatura").style.width = '200px';
+    <script>
+        document.getElementById("image").onchange = function () {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("miniatura").src = e.target.result;
+                document.getElementById("miniatura").style.height = '100px';
+                document.getElementById("miniatura").style.width = '200px';
+            };
+            reader.readAsDataURL(this.files[0]);
         };
-
-        // read the image file as a data URL.
-        reader.readAsDataURL(this.files[0]);
-    };
-
-</script>
-<?php
+    </script>
+    <?php
     echo '</main>';
-    else  : ?>
+else  : ?>
     <section id="asdf">
         <h2>Pro import odečtu musíte být přihlášeni.</h2>
         <a href="<?= BASE_URL ?>">Návrat na úvodní stránku</a>
