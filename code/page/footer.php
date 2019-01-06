@@ -9,7 +9,7 @@
                     sotfbit@softbit.cz</a><br>
             </address>
         </section>
-        <section>
+        <section style="position: ">
             <p>
                 ©
                 <a href="https://www.softbit.cz/">Softbit software s.r.o.</a>

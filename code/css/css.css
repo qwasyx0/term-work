@@ -4,6 +4,7 @@ body, html {
     background-color: #fff;
     font-family: 'Ubuntu', sans-serif;
 }
+
 main  {
     height:100%;
     width: 960px;
@@ -98,14 +99,20 @@ header nav a:hover {
 
 footer {
     font-family: 'Ubuntu', sans-serif;
-    text-align: center;
+    margin-top: 20px;
+    min-height: 200px;
     display: flex;
+    left: 0;
+    bottom: 0;
+    width: 100%;
     background-color: #e9eaed;
-    position: relative;
+    float: none;
 }
-
+footer section {
+    text-align: left;
+}
 .full-width-wrapper, main {
-    margin: auto;
+    margin: 0 auto;
 }
 
 .flex-wrap {
@@ -324,7 +331,7 @@ footer {
     justify-content: center;
 }
 #divpohyby td{
-    max-width: 772px;
+    max-width: 400px;
     overflow: hidden;
 }
 
@@ -345,40 +352,4 @@ footer {
 }
 }
 
-@media print  {
 
-    /* Force table to not be like tables anymore */
-    table, thead, tbody, th, td, tr {
-        font-size: 14px;
-        text-shadow: none;
-    }
-
-    /* Hide table headers (but not display: none;, for accessibility) */
-    thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-
-    tr { border: 1px solid #ccc; }
-
-    td {
-        /* Behave  like a "row" */
-        border: none;
-        border-bottom: 1px solid #eee;
-        position: relative;
-        padding-left: 50%;
-    }
-
-    td:before {
-        /* Now like a table header */
-        position: absolute;
-        /* Top/left values mimic padding */
-        top: 6px;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-    }
-
-}

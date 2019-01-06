@@ -146,7 +146,9 @@ if ($authService->hasIdentity()) :
                     } ?>
                 </table>
             </div>
-            <a href="../xml/xml.php" style="color:blue;font-size:18px;">Export odečtů do xml</a>
+         <div id="noprint">
+            <a href="./xml/xml.php" style="color:blue;font-size:18px;">Export odečtů do xml</a>
+         </div>
             <?php break;
         case "pohyby": ?>
             <h2>Pohyby vodoměru</h2>

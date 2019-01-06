@@ -1,3 +1,8 @@
+<script language='javascript' type='text/javascript'>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 <?php
 if ($authService->hasIdentity()) : ?>
     <script language='javascript' type='text/javascript'>
@@ -10,7 +15,7 @@ if ($authService->hasIdentity()) : ?>
             }
         }
     </script>
-    <main>
+
         <?php
 
         if (isset($_GET['id_smazat'])) {
@@ -36,17 +41,18 @@ if ($authService->hasIdentity()) : ?>
             } catch (PDOException $e) {
                 echo "Error: " . $e->getMessage();
             }
-            echo '<h2>Upravit uživatele <u>' . $idemail . '</u>   </h2> '
-                . '<br> <a style="color:blue;" href="index.php?page=users">Zpět</a><br><br>';
+            echo '<h2 style="text-align: center;">Upravit uživatele <u>' . $idemail . '</u>   </h2> '
+                . '<br> <div style="text-align: center;"><a style="color:blue;" href="index.php?page=users">Zpět</a><br></div>>';
 
         } else {
             if ($_SESSION['role'] == 1) {
                 echo '<div id="noprint">';
-                echo '<h2>Přidat nového uživatele</h2>';
+                echo '<h2 style="text-align: center;">Přidat nového uživatele</h2>';
                 echo '</div>';
             }
         }
         ?>
+    <main>
         <div class="formular1">
             <?php
             if (isset($_POST['pridani']) || isset($_POST['upravit'])) {
@@ -158,20 +164,7 @@ if ($authService->hasIdentity()) : ?>
             ?>
 
         </div>
-        <?php
-        try {
-            $sql = "select role from uzivatele where email=:email;";
-            $q = $pdo->prepare($sql);
-            $identity = $authService->getIdentity();
-            $q->bindValue(":email", $_SESSION['email']);
-            $q->execute();
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-        $row = $q->fetch(PDO::FETCH_ASSOC);
-        // nefunguje role
-        if ($row["role"] == 1) {
-        ?>
+        <?php if ($_SESSION['role'] == 1) { ?>
         <h2>Uživatelské účty</h2>
 
         <div class="formular2" style="overflow-x:auto;">
@@ -233,8 +226,6 @@ if ($authService->hasIdentity()) : ?>
                         }
                         }
                         echo '</table>'; ?>
-
-
     </main>
 <?php else  : ?>
     <section id="hero">

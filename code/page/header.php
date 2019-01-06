@@ -1,5 +1,7 @@
 <?php
-$pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+$pdo = new PDO("mysql:host=" . DB_HOST . ";dbname="
+    . DB_NAME, DB_USER, DB_PASSWORD,
+    array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 $authService = Authentication::getInstance();
     $sql = "select role, idciselpod from uzivatele where email=:email;";
     $q = $pdo->prepare($sql);
