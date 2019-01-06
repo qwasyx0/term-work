@@ -65,8 +65,7 @@ if ($authService->hasIdentity()) : ?>
     </div>
     <?php    echo '</main>';
 else  : ?>
-    <section id="asdf">
+    <section id="hero">
         <h2>Pro zobrazení kontaktní stránky musíte být přihlášeni.</h2>
-        <a href="<?= BASE_URL ?>">Návrat na úvodní stránku</a>
     </section>
 <?php endif; ?>

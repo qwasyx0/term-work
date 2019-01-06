@@ -54,7 +54,7 @@ if ($authService->hasIdentity()) :
                     <td><input required type="number" name="stav" min="0"></td>
                 </tr>
             </table>
-            <textarea id="zprava" name="komentar"></textarea>
+            <textarea id="zprava" name="komentar" maxlength="200"></textarea>
             <br/>
             <label for="image" style="position: ;">Připojit fotku (nepovinné): </label>
             <input id="image" name="image" type="file">
@@ -79,8 +79,7 @@ if ($authService->hasIdentity()) :
     <?php
     echo '</main>';
 else  : ?>
-    <section id="asdf">
+    <section id="hero">
         <h2>Pro import odečtu musíte být přihlášeni.</h2>
-        <a href="<?= BASE_URL ?>">Návrat na úvodní stránku</a>
     </section>
 <?php endif; ?>

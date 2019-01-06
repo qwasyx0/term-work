@@ -237,8 +237,7 @@ if ($authService->hasIdentity()) : ?>
 
     </main>
 <?php else  : ?>
-    <section id="asdf">
+    <section id="hero">
         <h2>Pro zobrazení správy uživatelů musíte být přihlášeni.</h2>
-        <a href="<?= BASE_URL ?>">Návrat na úvodní stránku</a>
     </section>
 <?php endif; ?>

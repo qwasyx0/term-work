@@ -11,6 +11,7 @@ if ($authService->hasIdentity()) :
                     <option value="vodomer">Vodoměr</option>
                     <option value="pohyby">Pohyby vodoměru</option>
                     <option value="odbernamista">Odběrná místa</option>
+                    <option value="import">Importy odečtů</option>
                 </select>
                 <script type="text/javascript">
                     document.getElementById('select_odecty').value = "<?php echo $_POST['select_odecty'];?>";
@@ -146,7 +147,7 @@ if ($authService->hasIdentity()) :
                     } ?>
                 </table>
             </div>
-            <a href="<?= BASE_URL . "?page=xml" ?>" style="color:blue;font-size:18px;">Export odečtů do xml</a>
+            <a href="./xml/xml.php" style="color:blue;font-size:18px;">Export odečtů do xml</a>
             <?php break;
         case "pohyby": ?>
             <h2>Pohyby vodoměru</h2>
@@ -241,6 +242,43 @@ if ($authService->hasIdentity()) :
                 </table>
             </div>
             <?php break;
+
+        case "import": ?>
+            <h2>Importy odečtů</h2>
+            <div id="divpohyby">
+                <table id="tablecol" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <th>Stav:</th>
+                        <th>Datum odečtu:</th>
+                        <th>Komentář:</th>
+                    </tr>
+
+                    <?php
+                    if ($_SESSION['role'] == 1) {
+                        $sql = "select * from importodectu";
+                    } else {
+                        $sql = "select * from importodectu where idciselpod= :idciselpod";
+                    }
+                    try {
+                        $q = $pdo->prepare($sql);
+                        $q->bindValue(":idciselpod", $_SESSION['idciselpod']);
+                        $q->execute();
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                    while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                        echo '
+                                <tr>
+                                    <td>' . $radek["STAV"] . '</td>   
+                                    <td>' . date("d.m.Y", strtotime($radek["DATUM_ODECTU"])) . '</td>
+                                    <td width="40px">' . $radek["KOMENTAR"] . '</td>                               
+                                </tr> ';
+                    } ?>
+                </table>
+            </div>
+            <?php break;
+
+
     } ?>
     </div>
     <?php
@@ -249,8 +287,7 @@ if ($authService->hasIdentity()) :
     </div>
     </main>
 <?php else  : ?>
-    <section id="asdf">
+    <section id="hero">
         <h2>Pro zobrazení historie odečtů musíte být přihlášeni.</h2>
-        <a href="<?= BASE_URL ?>">Návrat na úvodní stránku</a>
     </section>
 <?php endif; ?>

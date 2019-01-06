@@ -323,6 +323,10 @@ footer {
     display: flex;
     justify-content: center;
 }
+#divpohyby td{
+    max-width: 772px;
+    overflow: hidden;
+}
 
 @media print {
     body > header{
