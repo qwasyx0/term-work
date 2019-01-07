@@ -166,7 +166,7 @@ if ($authService->hasIdentity()) :
                     if ($_SESSION['role'] == 1) {
                         $sql = "select * from VIEWPOHYBY";
                     } else {
-                        $sql = "select * from VIEWPOHYBY where idciselpod= :idciselpod";
+                        $sql = "select * from VIEWPOHYBY where idciselpod= :idciselpod order by DATUM_POHYBU asc";
                     }
                     try {
                         $q = $pdo->prepare($sql);
