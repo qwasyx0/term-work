@@ -17,7 +17,6 @@ $authService = Authentication::getInstance();
     } else {
         $roleslovne = " běžný uživatel";
     }
-
 ?>
     <nav id="nav">
         <?php if ($authService->hasIdentity()) : ?>
