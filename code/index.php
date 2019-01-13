@@ -29,6 +29,7 @@ function __autoload($className)
 </header>
 
 <?php
+
 if (isset($_GET['page'])) {
     $file = "./page/" . $_GET["page"] . ".php";
     if (file_exists($file)) {
