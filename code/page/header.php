@@ -1,5 +1,7 @@
 <?php
-$pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASSWORD, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+$pdo = new PDO("mysql:host=" . DB_HOST . ";dbname="
+    . DB_NAME, DB_USER, DB_PASSWORD,
+    array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
 $authService = Authentication::getInstance();
     $sql = "select role, idciselpod from uzivatele where email=:email;";
     $q = $pdo->prepare($sql);
@@ -23,7 +25,7 @@ $authService = Authentication::getInstance();
             <a href="<?= BASE_URL . "?page=odecty" ?>">Prohlížení odečtů</a>
             <a href="<?= BASE_URL . "?page=edit_mista" ?>">Editace</a>
             <a href="<?= BASE_URL . "?page=users" ?>">Nastavení</a>
-            <a href="<?= BASE_URL . "?page=kontakt" ?>">Kontakt</a>
+            <!-- <a href="<?= BASE_URL . "?page=kontakt" ?>">Kontakt</a> -->
             <a href="<?= BASE_URL . "?page=logout" ?>">Odhlásit</a>
             <span>Jste přihlášen jako:<br/><?php echo $_SESSION["email"]; ?><br/>Role:<?php echo $roleslovne; ?></span>
         <?php else : ?>
