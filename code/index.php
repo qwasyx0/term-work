@@ -51,11 +51,6 @@ if (isset($_GET['page'])) {
 
 }
 ?>
-<footer>
-    <?php
-    include_once("./page/footer.php");
-    ?>
-</footer>
 </body>
 </html>
 

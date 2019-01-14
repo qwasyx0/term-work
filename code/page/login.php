@@ -22,6 +22,11 @@
         </p>
     </div>
 </section>
+<footer>
+    <?php
+    include_once("./page/footer.php");
+    ?>
+</footer>
 
 
 

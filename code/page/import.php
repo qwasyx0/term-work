@@ -113,15 +113,19 @@ if ($authService->hasIdentity()) :
                     </table>
                     <textarea id="zprava" name="komentar" maxlength="200"></textarea>
                     <br/>
-                    <label for="image" style="position: ;">Připojit fotku (nepovinné): </label>
-                    <input id="image" name="image" type="file">
+                    <table>
+                        <tr>
+                            <td><label for="image" style="position: ;">Připojit fotku (nepovinné): </label></td>
+                            <td><input id="image" name="image" type="file"></td>
+                        </tr>
+                    </table>
                     <br/>
                     <img id="miniatura" src="">
                     <br/>
                     <?php
                     if (isset($_GET['id_upravit'])) {
                         echo '<input type="submit" value="Upravit" name="upravit" style="width:160px;">';
-                    } else if ($_SESSION['role'] == 1) {
+                    } else {
                         echo '<input type="submit" value="Zapsat odečet" name="pridani" style="width:160px; margin-top:10px;">';
                     }
                     ?>
@@ -196,6 +200,11 @@ if ($authService->hasIdentity()) :
         </div>
     </div>
     </main>
+    <footer>
+        <?php
+        include_once("./page/footer.php");
+        ?>
+    </footer>
 <?php
 
 else  : ?>

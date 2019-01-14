@@ -252,6 +252,11 @@ if ($authService->hasIdentity()) :
 
     ?>
 </main>
+    <footer>
+        <?php
+        include_once("./page/footer.php");
+        ?>
+    </footer>
 <?php else  : ?>
     <section id="hero">
         <h2>Pro zobrazení historie odečtů musíte být přihlášeni.</h2>
