@@ -1,5 +1,4 @@
-<?php if ($authService->hasIdentity()) : ?>
-    <?php
+<?php if ($authService->hasIdentity()) :
     include './page/editace.php';
     if (isset($_GET['id_smazat'])) {
         try {
@@ -14,13 +13,13 @@
         }
     }
     if (isset($_GET['id_upravit'])) {
-        $_SESSION['id_upravit'] = $_GET['id_upravit'];
+        $upravit = $_GET['id_upravit'];
 
         try {
             $sql2 = "select o.IDCISELPOD, o.ID_VODOMER, o.ODBERMISTO, o.OBEC, o.ULICE, o.CP_CE,o.CISLODOMU,o.PARCELA, c.FIRMA, v.CISLO_VODOMERU , o.TYP_SAZBY, s.CENA from odbernamista o 
                         join ciselpod c on o.IDCISELPOD = c.IDCISELPOD join vodomery v on o.ID_VODOMER = v.ID  join sazby s on o.TYP_SAZBY = s.TYP_SAZBY where o.ID = :id";
             $q2 = $pdo->prepare($sql2);
-            $q2->bindValue(":id", $_SESSION['id_upravit']);
+            $q2->bindValue(":id", $upravit);
             $q2->execute();
             while ($radek = $q2->fetch(PDO::FETCH_ASSOC)) {
                 $idciselpod = $radek['IDCISELPOD'];
@@ -39,10 +38,58 @@
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-        echo '<br> <div style="text-align: center;"><a style="color:blue;" href="index.php?page=edit_mista">Zpět</a><br></div>>';
+        echo '<br> <div style="text-align: center;"><a style="color:blue;" href="index.php?page=edit_mista">Zpět</a><br></div>';
     } ?>
     <main>
         <div class="formular1">
+            <?php
+             if (isset($_POST['submit_mista']) || isset($_POST['submit_upravit'])) {
+                 if (!isset($_POST['submit_upravit'])) {
+                     try {
+                         $sql = "INSERT INTO odbernamista (IDCISELPOD, ID_VODOMER, ODBERMISTO, TYP_SAZBY,OBEC, ULICE, CP_CE,CISLODOMU,PARCELA) values (:idciselpod, :id_vodomer, :odbermisto, :typ_sazby, :obec, :ulice, :cp_ce, :cislodomu, :parcela);";
+                         $pdo->query('set names utf-8');
+                         $q2 = $pdo->prepare($sql);
+                         $q2->bindValue(":idciselpod", $_POST['select_ciselpod']);
+                         $q2->bindValue(":id_vodomer", $_POST['select_vodomer']);
+                         $q2->bindValue(":odbermisto", $_POST['odbermisto']);
+                         $q2->bindValue(":typ_sazby", $_POST['select_sazby']);
+                         $q2->bindValue(":obec", $_POST['obec']);
+                         $q2->bindValue(":ulice", $_POST['ulice']);
+                         $q2->bindValue(":cp_ce", $_POST['cp_ce']);
+                         $q2->bindValue(":cislodomu", $_POST['cislodomu']);
+                         $q2->bindValue(":parcela", $_POST['parcela']);
+                         $q2->execute();
+                     } catch (PDOException $e) {
+                         echo "Error: " . $e->getMessage();
+                     }
+                     echo 'Přidání proběhlo úspěšně.';
+
+
+                 } else {
+
+
+                     try {
+                         $sql = "UPDATE odbernamista SET IDCISELPOD =:idciselpod, ID_VODOMER = :id_vodomer,ODBERMISTO=:odbermisto, TYP_SAZBY =:typ_sazby, OBEC =:obec, ULICE = :ulice, CP_CE=:cp_ce, CISLODOMU =:cislodomu, PARCELA =:parcela where ID =:id";
+                         $pdo->query('set names utf-8');
+                         $q2 = $pdo->prepare($sql);
+                         $q2->bindValue(":idciselpod", $_POST['select_ciselpod']);
+                         $q2->bindValue(":id_vodomer", $_POST['select_vodomer']);
+                         $q2->bindValue(":odbermisto", $_POST['odbermisto']);
+                         $q2->bindValue(":typ_sazby", $_POST['select_sazby']);
+                         $q2->bindValue(":obec", $_POST['obec']);
+                         $q2->bindValue(":ulice", $_POST['ulice']);
+                         $q2->bindValue(":cp_ce", $_POST['cp_ce']);
+                         $q2->bindValue(":cislodomu", $_POST['cislodomu']);
+                         $q2->bindValue(":parcela", $_POST['parcela']);
+                         $q2->bindValue(":id", $upravit);
+                         $q2->execute();
+                     } catch (PDOException $e) {
+                         echo "Error: " . $e->getMessage();
+                     }
+                     echo 'Úprava proběhla úspěšně.';
+                 }
+             }
+            ?>
             <?php if (!isset($_GET['id_upravit'])) { ?>
 
             <form action="#" method="post" enctype="multipart/form-data">
@@ -116,7 +163,7 @@
                                 echo "Error: " . $e->getMessage();
                             }
                             echo '<tr>
-                        <td><label for="select_ciselpod">Uživatel</label></td>';
+                        <td><label for="select_ciselpod">Plátce</label></td>';
                             echo '<td><select name="select_ciselpod">';
                             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                                 echo '            
@@ -169,7 +216,7 @@
                                 echo "Error: " . $e->getMessage();
                             }
                             echo '<tr>
-                        <td><label for="select_ciselpod">Uživatel</label></td>';
+                        <td><label for="select_ciselpod">Plátce</label></td>';
                             echo '<td><select name="select_ciselpod" >';
                             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                                 echo '            
@@ -227,50 +274,7 @@ echo'<tr>
         </div>
 
 
-        <?php
-        if (isset($_POST['submit_mista'])) {
-            try {
-                $sql = "INSERT INTO odbernamista (IDCISELPOD, ID_VODOMER, ODBERMISTO, TYP_SAZBY,OBEC, ULICE, CP_CE,CISLODOMU,PARCELA) values (:idciselpod, :id_vodomer, :odbermisto, :typ_sazby, :obec, :ulice, :cp_ce, :cislodomu, :parcela);";
-                $pdo->query('set names utf-8');
-                $q2 = $pdo->prepare($sql);
-                $q2->bindValue(":idciselpod", $_POST['select_ciselpod']);
-                $q2->bindValue(":id_vodomer", $_POST['select_vodomer']);
-                $q2->bindValue(":odbermisto", $_POST['odbermisto']);
-                $q2->bindValue(":typ_sazby", $_POST['select_sazby']);
-                $q2->bindValue(":obec", $_POST['obec']);
-                $q2->bindValue(":ulice", $_POST['ulice']);
-                $q2->bindValue(":cp_ce", $_POST['cp_ce']);
-                $q2->bindValue(":cislodomu", $_POST['cislodomu']);
-                $q2->bindValue(":parcela", $_POST['parcela']);
-                $q2->execute();
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
-            }
-            echo 'Přidání proběhlo úspěšně.';
-        }
 
-        if (isset($_POST['submit_upravit'])) {
-            try {
-                $sql = "UPDATE odbernamista SET IDCISELPOD =:idciselpod, ID_VODOMER = :id_vodomer,ODBERMISTO=:odbermisto, TYP_SAZBY =:typ_sazby, OBEC =:obec, ULICE = :ulice, CP_CE=:cp_ce, CISLODOMU =:cislodomu, PARCELA =:parcela where ID =:id";
-                $pdo->query('set names utf-8');
-                $q2 = $pdo->prepare($sql);
-                $q2->bindValue(":idciselpod", $_POST['select_ciselpod']);
-                $q2->bindValue(":id_vodomer", $_POST['select_vodomer']);
-                $q2->bindValue(":odbermisto", $_POST['odbermisto']);
-                $q2->bindValue(":typ_sazby", $_POST['select_sazby']);
-                $q2->bindValue(":obec", $_POST['obec']);
-                $q2->bindValue(":ulice", $_POST['ulice']);
-                $q2->bindValue(":cp_ce", $_POST['cp_ce']);
-                $q2->bindValue(":cislodomu", $_POST['cislodomu']);
-                $q2->bindValue(":parcela", $_POST['parcela']);
-                $q2->bindValue(":id", $_SESSION['id_upravit']);
-                $q2->execute();
-            } catch (PDOException $e) {
-                echo "Error: " . $e->getMessage();
-            }
-            echo 'Úprava proběhla úspěšně.';
-        }
-        ?>
 
 
         <?php

@@ -20,11 +20,11 @@ if ($authService->hasIdentity()) :
         }
     }
     if (isset($_GET['id_upravit'])) {
-        $_SESSION["idupravit"] = $_GET['id_upravit'];
+        $upravit = $_GET['id_upravit'];
         try {
-            $sql2 = "select ID, DATUM_ODECTU, STAV, FOTKA, KOMENTAR from uzivatele where id = :id";
+            $sql2 = "select ID, DATUM_ODECTU, STAV, FOTKA, KOMENTAR from importodectu where id = :id";
             $q2 = $pdo->prepare($sql2);
-            $q2->bindValue(":id", $_SESSION["idupravit"]);
+            $q2->bindValue(":id", $upravit);
             $q2->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -38,7 +38,7 @@ if ($authService->hasIdentity()) :
         echo '</div>';
     }
     ?>
-
+    <main>
     <div class="formular1">
         <?php
         if (isset($_POST['pridani']) || isset($_POST['upravit'])) {
@@ -84,7 +84,7 @@ if ($authService->hasIdentity()) :
                     $id = $_GET['id_upravit'];
                     $sql2 = "update importodectu set  datum_odectu= :datum_odectu , stav=:stav ,komentar = :komentar where id=:id ";
                     $q2 = $pdo->prepare($sql2);
-                    $q2->bindValue(":id", $_SESSION["idupravit"]);
+                    $q2->bindValue(":id", $upravit);
                     $q2->bindValue(":stav", $_POST['stav']);
                     $q2->bindValue(":komentar", $_POST['komentar']);
                     $q2->bindValue(":datum_odectu", $_POST['datum_odectu']);
@@ -97,7 +97,7 @@ if ($authService->hasIdentity()) :
 
         }
         ?>
-<main>
+
             <div id="noprint">
                 <form action="#" method="post" enctype="multipart/form-data">
                     <table>
@@ -171,7 +171,7 @@ if ($authService->hasIdentity()) :
                 if ($_SESSION['role'] == 1) {
                     $sql = "select * from importodectu";
                 } else {
-                    $sql = "select * from importodectu where idciselpod= :idciselpod";
+                    $sql = "select * from importodectu where IDCISELPOD= :idciselpod";
                 }
                 try {
                     $q = $pdo->prepare($sql);
