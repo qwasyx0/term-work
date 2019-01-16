@@ -1,15 +1,18 @@
 <?php if ($authService->hasIdentity()) :
     include './page/editace.php';
     if (isset($_GET['id_smazat'])) {
-        try {
-            $idsmazat = $_GET['id_smazat'];
-            $sql2 = "delete from ciselpod where ciselpod.IDCISELPOD = :id";
-            $q2 = $pdo->prepare($sql2);
-            $q2->bindValue(":id", $idsmazat);
-            $q2->execute();
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
+        $idsmazat = $_GET['id_smazat'];
+
+            try {
+                $sql2 = "DELETE ciselpod , uzivatele FROM ciselpod INNER JOIN uzivatele WHERE ciselpod.IDCISELPOD = uzivatele.IDCISELPOD and ciselpod.IDCISELPOD = :id";
+
+                $q2 = $pdo->prepare($sql2);
+                $q2->bindValue(":id", $idsmazat);
+                $q2->execute();
+            } catch (PDOException $e) {
+                echo "Error: " . $e->getMessage();
+            }
+
     }
     if (isset($_GET['id_upravit'])) {
         $upravit = $_GET['id_upravit'];
@@ -28,7 +31,7 @@
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-        echo '<br> <div style="text-align: center;"><a style="color:blue;" href="index.php?page=edit_ciselpod">Zpět</a><br></div>';
+        echo '<br> <div style="text-align: center;"><a name="zpet" style="color:blue;" href="index.php?page=edit_ciselpod">Zpět</a><br></div>';
         try {
             $sql2 = "select IDCISELPOD, EMAIL from uzivatele where IDCISELPOD=:id";
             $q2 = $pdo->prepare($sql2);
@@ -40,30 +43,65 @@
         }catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-    } ?>
+    }
 
+    ?>
     <main>
         <div class="formular1">
-            <?php if (!isset($_GET['id_upravit'])) { ?>
+            <form action="#" method="post">
 
-            <form action="#" method="post" enctype="multipart/form-data">
+            <?php     if (isset($_POST['submit_pridat']) || isset($_POST['submit_upravit'])) {
+                if (isset($_POST['submit_pridat'])) {
+                    try {
+                        $sql = "INSERT INTO ciselpod (FIRMA, ULICE, PSC, MESTO) 
+                                          values (:firma, :ulice,:psc,:mesto);";
+                        $pdo->query('set names utf-8');
+                        $q2 = $pdo->prepare($sql);
+                        $q2->bindValue(":mesto", $_POST['mesto']);
+                        $q2->bindValue(":firma", $_POST['firma']);
+                        $q2->bindValue(":ulice", $_POST['ulice']);
+                        $q2->bindValue(":psc", $_POST['psc']);
+                        $q2->execute();
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                    echo 'Přidání proběhlo úspěšně.';
+                } else {
+                    try {
+                        $sql = "UPDATE ciselpod SET FIRMA=:firma, ULICE=:ulice, PSC=:psc, MESTO=:mesto where IDCISELPOD =:id";
+                        $pdo->query('set names utf-8');
+                        $q2 = $pdo->prepare($sql);
+                        $q2->bindValue(":mesto", $_POST['mesto']);
+                        $q2->bindValue(":firma", $_POST['firma']);
+                        $q2->bindValue(":ulice", $_POST['ulice']);
+                        $q2->bindValue(":psc", $_POST['psc']);
+                        $q2->bindValue(":id", $upravit);
+                        $q2->execute();
+                    } catch (PDOException $e) {
+                        echo "Error: " . $e->getMessage();
+                    }
+                    echo 'Úprava proběhla úspěšně.';
+                }
+            }
+            if (!isset($_GET['id_upravit'])) { ?>
+
                 <h2>Přidat novou firmu</h2>
                 <table>
                     <tr>
                         <td><label for="firma">Firma</label>
-                        <td><input type="text" name="firma"></td>
+                        <td><input required type="text" name="firma"></td>
                     </tr>
                     <tr>
                         <td><label for="ulice">Ulice</label>
-                        <td><input type="text" name="ulice"></td>
+                        <td><input required type="text" name="ulice"></td>
                     </tr>
                     <tr>
                         <td><label for="psc">PSČ</label>
-                        <td><input type="number" name="psc"></td>
+                        <td><input required type="number" name="psc"></td>
                     </tr>
                     <tr>
                         <td><label for="mesto">Město</label>
-                        <td><input type="text" name="mesto"></td>
+                        <td><input required type="text" name="mesto"></td>
                     </tr>
                     <?php
                     } else { ?>
@@ -71,19 +109,19 @@
                     <table>
                         <tr>
                             <td><label for="firma">Firma</label>
-                            <td><input type="text" name="firma" value="<?php echo $firma; ?>"></td>
+                            <td><input required type="text" name="firma" value="<?php echo $firma; ?>"></td>
                         </tr>
                         <tr>
                             <td><label for="ulice">Ulice</label>
-                            <td><input type="text" name="ulice" value="<?php echo $ulice; ?>"></td>
+                            <td><input required type="text" name="ulice" value="<?php echo $ulice; ?>"></td>
                         </tr>
                         <tr>
                             <td><label for="psc">PSČ</label>
-                            <td><input type="number" name="psc" value="<?php echo $psc; ?>"></td>
+                            <td><input required type="number" name="psc" value="<?php echo $psc; ?>"></td>
                         </tr>
                         <tr>
                             <td><label for="mesto">Město</label>
-                            <td><input type="text" name="mesto" value="<?php echo $mesto; ?>"> </td>
+                            <td><input required type="text" name="mesto" value="<?php echo $mesto; ?>"> </td>
                         </tr>
                         <?php }
 
@@ -99,37 +137,35 @@
                             }
                             echo '<tr>
                         <td><label for="select_uzivatele">Přiřadit email</label></td>';
-                            echo '<td><select name="select_uzivatele">';
+                            echo '<td><select required name="select_uzivatele">';
                             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                                 echo '            
                <option  value="' . $radek["EMAIL"] . '">' . $radek["EMAIL"] . '</option>';
                             }
                             echo '</select></td></tr>';
                             if(isset($_POST['submit_pridat'])) {
+                            try {
+                                $sql = "select MAX(IDCISELPOD) as max from ciselpod";
+                                $q = $pdo->prepare($sql);
+                                $q->execute();
+                            } catch (PDOException $e) {
+                                echo "Error: " . $e->getMessage();
+                            }
+                            while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                                $nejvyssi_id_pridat = $radek['max'] + 1;
+                                $nejvyssi_id = $radek['max'];
+                            }
                                 try {
-                                    $sql = "select MAX(IDCISELPOD) as max from ciselpod";
-                                    $q = $pdo->prepare($sql);
-                                    $q->execute();
-                                } catch (PDOException $e) {
-                                    echo "Error: " . $e->getMessage();
-                                }
-                                    while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
-                                    $nejvyssi_id = $radek['max'] +1;
-
-                                        }
-                                try {
-                                    $sql = "update uzivatele set IDCISELPOD=:idciselpod where EMAIL=:email";
+                                    $sql = "update uzivatele set IDCISELPOD=:idciselpod where uzivatele.EMAIL=:email";
                                     $q = $pdo->prepare($sql);
                                     $q->bindValue(":idciselpod", $nejvyssi_id);
                                     $q->bindValue(":email", $_POST['select_uzivatele']);
-
-                                    //neupdatuje to i kdyz to vypada ze je spravne
-                                    echo $nejvyssi_id;
-                                    echo $_POST['select_uzivatele'];
                                     $q->execute();
                                 } catch (PDOException $e) {
                                     echo "Error: " . $e->getMessage();
                                 }
+                                echo $nejvyssi_id_pridat;
+                                echo $_POST['select_uzivatele'];
                             }
                         } else {
 
@@ -143,25 +179,18 @@
                             }
                             echo '<tr>
                         <td><label for="select_uzivatele">Upravit email</label></td>';
-                            echo '<td><select name="select_uzivatele">';
+                            echo '<td><select required  name="select_uzivatele">';
                            echo' <option selected="selected" value="' . $radek["IDCISELPOD"] . '">' .  $_SESSION['stary_mail'] . '</option>';
                             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                                 echo '            
-               <option  value="' . $radek["IDCISELPOD"] . '">' .  $radek['EMAIL'] . '</option>';
+               <option  value="' . $radek["EMAIL"] . '">' .  $radek['EMAIL'] . '</option>';
                             }
                             echo '</select></td></tr>';
 
+
+                            if(isset($_POST['submit_upravit'])) {
                                 try {
-                                    $sql = "update uzivatele set IDCISELPOD=NULL where IDCISELPOD=:idciselpod";
-                                    $q = $pdo->prepare($sql);
-                                    $q->bindValue(":idciselpod", $_SESSION['upraveny_mail_id']);
-                                    $q->execute();
-                                } catch (PDOException $e) {
-                                    echo "Error: " . $e->getMessage();
-                                }
-                            if(isset($_POST['submit_upravitt'])) {
-                                try {
-                                    $sql = "update uzivatele set IDCISELPOD=:idciselpod where EMAIL=:email";
+                                    $sql = "update uzivatele set IDCISELPOD=:idciselpod where uzivatele.EMAIL=:email";
                                     $q = $pdo->prepare($sql);
                                     $q->bindValue(":idciselpod", $_SESSION['upraveny_mail_id']);
                                     $q->bindValue(":email", $_POST['select_uzivatele']);
@@ -169,7 +198,8 @@
                                 } catch (PDOException $e) {
                                     echo "Error: " . $e->getMessage();
                                 }
-
+                                echo $_SESSION['upraveny_mail_id'];
+                                echo $_POST['select_uzivatele'];
                             }
                         }
 
@@ -188,41 +218,7 @@
         </div>
 
 
-        <?php
-        if (isset($_POST['submit_pridat']) || isset($_POST['submit_upravit'])) {
-            if (isset($_POST['submit_pridat'])) {
-                try {
-                    $sql = "INSERT INTO ciselpod (FIRMA, ULICE, PSC, MESTO) 
-                                          values (:firma, :ulice,:psc,:mesto);";
-                    $pdo->query('set names utf-8');
-                    $q2 = $pdo->prepare($sql);
-                    $q2->bindValue(":mesto", $_POST['mesto']);
-                    $q2->bindValue(":firma", $_POST['firma']);
-                    $q2->bindValue(":ulice", $_POST['ulice']);
-                    $q2->bindValue(":psc", $_POST['psc']);
-                    $q2->execute();
-                } catch (PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
-                echo 'Přidání proběhlo úspěšně.';
-            } else {
-                try {
-                    $sql = "UPDATE ciselpod SET FIRMA=:firma, ULICE=:ulice, PSC=:psc, MESTO=:mesto where IDCISELPOD =:id";
-                    $pdo->query('set names utf-8');
-                    $q2 = $pdo->prepare($sql);
-                    $q2->bindValue(":mesto", $_POST['mesto']);
-                    $q2->bindValue(":firma", $_POST['firma']);
-                    $q2->bindValue(":ulice", $_POST['ulice']);
-                    $q2->bindValue(":psc", $_POST['psc']);
-                    $q2->bindValue(":id", $upravit);
-                    $q2->execute();
-                } catch (PDOException $e) {
-                    echo "Error: " . $e->getMessage();
-                }
-                echo 'Úprava proběhla úspěšně.';
-            }
-        }
-        ?>
+
 
 
         <div class="formular">

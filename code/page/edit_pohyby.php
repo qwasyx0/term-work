@@ -17,7 +17,7 @@
             $sql2 = "select p.ID_VODOMERY,v.CISLO_VODOMERU, p.ID_ODBERMISTO, m.ODBERMISTO, p.DATUM_POHYBU, p.DRUH_POHYBU, p.POPIS_POHYBU from vodomerypohyby p 
                       left join vodomery v on p.ID_VODOMERY = v.ID 
                       left join odbernamista m on p.ID_ODBERMISTO = m.ID 
-                      where ID=:id";
+                      where p.ID=:id";
             $q2 = $pdo->prepare($sql2);
             $q2->bindValue(":id", $upravit);
             $q2->execute();
@@ -37,9 +37,10 @@
     } ?>
     <main>
         <div class="formular1">
+            <form action="#" method="post">
             <?php if (!isset($_GET['id_upravit'])) { ?>
 
-            <form action="#" method="post" enctype="multipart/form-data">
+
                 <h2>Zapsat nový pohyb vodoměru</h2>
                 <table>
                     <tr>
@@ -48,17 +49,18 @@
                     </tr>
                     <tr>
                         <td><label for="druh_pohybu">Druh pohybu</label>
-                        <td><input type="text" name="druh_pohybu"></td>
+                        <td><input required type="text" name="druh_pohybu"></td>
                     </tr>
                     <tr>
                         <td><label for="popis_pohybu">Popis pohybu</label>
-                        <td><input type="text" name="popis_pohybu"></td>
+                        <td><input required type="text" name="popis_pohybu"></td>
                     </tr>
 
 
                     <?php
                     } else { ?>
                     <h2>Upravit pohyb vodoměru</h2>
+
                     <table>
                         <tr>
                             <td><label for="datum_pohybu">Datum pohybu</label></td>
@@ -66,16 +68,17 @@
                         </tr>
                         <tr>
                             <td><label for="druh_pohybu">Druh pohybu</label>
-                            <td><input type="text" name="druh_pohybu" value="<?php echo $druh_pohybu; ?>"></td>
+                            <td><input required type="text" name="druh_pohybu" value="<?php echo $druh_pohybu; ?>"></td>
                         </tr>
                         <tr>
                             <td><label for="popis_pohybu">Popis pohybu</label>
-                            <td><input type="text" name="popis_pohybu" value="<?php echo $popis_pohybu; ?>"></td>
+                            <td><input required type="text" name="popis_pohybu" value="<?php echo $popis_pohybu; ?>"></td>
                         </tr>
                         <?php }
                         if (!isset($_GET['id_upravit'])) {
                             try {
-                                $sql = 'select ID, CISLO_VODOMERU from vodomery';
+                                $sql = 'select v.ID, v.CISLO_VODOMERU, c.IDCISELPOD, c.FIRMA from vodomery v left join ciselpod c on v.IDCISELPOD = c.IDCISELPOD where v.IDCISELPOD is not NULL';
+
                                 $q = $pdo->prepare($sql);
                                 $q->execute();
                             } catch (PDOException $e) {
@@ -83,15 +86,17 @@
                             }
                             echo '<tr>
                         <td><label for="select_vodomer">Vodoměr</label></td>';
-                            echo '<td><select name="select_vodomer">';
+                            echo '<td><select required name="select_vodomer">';
                             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                                 echo '            
-               <option  value="' . $radek["ID"] . '">' . $radek["CISLO_VODOMERU"] . '</option>';
+               <option  value="' . $radek["ID"] . '">' . $radek["CISLO_VODOMERU"] . " (" . $radek["FIRMA"] . ")" . '</option>';
                             }
                             echo '</select></td></tr>';
 
+
+
                             try {
-                                $sql = 'select ID, ODBERMISTO from odbernamista';
+                                $sql = 'select o.ID, o.ODBERMISTO, c.IDCISELPOD,c.FIRMA from odbernamista o left join ciselpod c on o.IDCISELPOD = c.IDCISELPOD';
                                 $q = $pdo->prepare($sql);
                                 $q->execute();
                             } catch (PDOException $e) {
@@ -99,12 +104,11 @@
                             }
                             echo '<tr>
                         <td><label for="select_mista">Odběrné místo</label></td>';
-                            echo '<td><select name="select_mista">';
+                            echo '<td><select required name="select_mista">';
                             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                                 echo '            
-               <option  value="' . $radek["ID"] . '">' . $radek["ODBERMISTO"] . '</option>';
+               <option  value="' . $radek["ID"] . '">' . $radek["ODBERMISTO"] . " (" . $radek["FIRMA"] . ")" . '</option>';
                             }
-                            echo '</select></td></tr>';
 
                         } else {
 
@@ -118,7 +122,7 @@
                             }
                             echo '<tr>
                         <td><label for="select_vodomer">Vodoměr</label></td>';
-                            echo '<td><select name="select_vodomer">';
+                            echo '<td><select required name="select_vodomer">';
                             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                                 echo '            
                <option  value="' . $radek["ID"] . '" ' . (($radek["ID"] == $id_vodomer) ? 'selected="selected"' : "") . '>' . $radek["CISLO_VODOMERU"] . '</option>';
@@ -134,7 +138,7 @@
                             }
                             echo '<tr>
                         <td><label for="select_mista">Odběrné místo</label></td>';
-                            echo '<td><select name="select_mista">';
+                            echo '<td><select required name="select_mista">';
                             while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
                                 echo '            
                <option  value="' . $radek["ID"] . '" ' . (($radek["ID"] == $id_odbermista) ? 'selected="selected"' : "") . '>' . $radek["ODBERMISTO"] . '</option>';
@@ -189,7 +193,7 @@
 
 
                                 $q2->bindValue(":id_vodomer", $_POST['select_vodomer']);
-                                $q2->bindValue(":id_odbermisto", $_POST['slect_mista']);
+                                $q2->bindValue(":id_odbermisto", $_POST['select_mista']);
                                 $q2->execute();
                             } catch (PDOException $e) {
                                 echo "Error: " . $e->getMessage();

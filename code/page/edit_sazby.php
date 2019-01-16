@@ -32,18 +32,18 @@
 
     <main>
         <div class="formular1">
+            <form action="#" method="post">
             <?php if (!isset($_GET['id_upravit'])) { ?>
 
-            <form action="#" method="post" enctype="multipart/form-data">
                 <h2>Definovat novou sazbu</h2>
                 <table>
                     <tr>
                         <td><label for="typ_sazby">Typ sazby</label>
-                        <td><input type="number" name="typ_sazby"></td>
+                        <td><input required type="number" name="typ_sazby"></td>
                     </tr>
                     <tr>
                         <td><label for="cena">Cena</label>
-                        <td><input type="number" name="cena"></td>
+                        <td><input required type="number" name="cena"></td>
                     </tr>
                     <tr>
                         <td><label for="obdobi_od">Období od</label>
@@ -59,11 +59,11 @@
                     <table>
                         <tr>
                             <td><label for="typ_sazby">Typ sazby</label>
-                            <td><input type="number" name="typ_sazby" value="<?php echo $typ_sazby; ?>"></td>
+                            <td><input required type="number" name="typ_sazby" value="<?php echo $typ_sazby; ?>"></td>
                         </tr>
                         <tr>
                             <td><label for="cena">Cena</label>
-                            <td><input type="number" name="cena" value="<?php echo $cena; ?>"></td>
+                            <td><input required type="number" name="cena" value="<?php echo $cena; ?>"></td>
                         </tr>
                         <tr>
                             <td><label for="obdobi_od">Období od</label>

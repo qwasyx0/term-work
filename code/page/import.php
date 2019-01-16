@@ -26,9 +26,20 @@ if ($authService->hasIdentity()) :
             $q2 = $pdo->prepare($sql2);
             $q2->bindValue(":id", $upravit);
             $q2->execute();
+            while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
+                $datum_odectu = $radek['DATUM_ODECTU'];
+                $stav = $radek['STAV'];
+                $komentar = $radek['KOMENTAR'];
+            }
+            echo $upravit;
+            echo $stav;
+            echo $datum_odectu;
+            echo $komentar;
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
+
+
         echo '<br> <div style="text-align: center;"><a style="color:blue; margin:auto;" href="index.php?page=import" >Zpět</a></div><br>'
             . '<h2 style="text-align: center;">Upravit zadaný odečet</h2> ';
 
@@ -97,9 +108,11 @@ if ($authService->hasIdentity()) :
 
         }
         ?>
+    <div id="noprint">
+    <form action="#" method="post" enctype="multipart/form-data">
+<?php if (!isset($_GET['id_upravit'])) { ?>
 
-            <div id="noprint">
-                <form action="#" method="post" enctype="multipart/form-data">
+
                     <table>
                         <tr>
                             <td><label for="datum_odectu">Datum odečtu: </label></td>
@@ -122,6 +135,33 @@ if ($authService->hasIdentity()) :
                     <br/>
                     <img id="miniatura" src="">
                     <br/>
+                    <?php
+                    } else { ?>
+
+    <table>
+        <tr>
+            <td><label for="datum_odectu">Datum odečtu: </label></td>
+            <td><input required type="date" name="datum_odectu" value='<?php echo date($datum_odectu); ?>'>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="stav">Stav odečtu ke dni: </label></td>
+            <td><input required type="number" name="stav" min="0" value="<?php echo $stav; ?>"></td>
+        </tr>
+    </table>
+    <textarea id="zprava" name="komentar" maxlength="200" value="<?php echo $komentar; ?>"></textarea>
+<br/>
+    <table>
+        <tr>
+            <td><label for="image" style="position: ;">Připojit fotku (nepovinné): </label></td>
+            <td><input id="image" name="image" type="file" ></td>
+        </tr>
+    </table>
+<br/>
+<img id="miniatura" src="">
+<br/>
+<?php } ?>
+
                     <?php
                     if (isset($_GET['id_upravit'])) {
                         echo '<input type="submit" value="Upravit" name="upravit" style="width:160px;">';

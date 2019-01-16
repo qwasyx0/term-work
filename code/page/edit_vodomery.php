@@ -37,22 +37,23 @@
 
     <main>
         <div class="formular1">
+            <form action="#" method="post">
             <?php if (!isset($_GET['id_upravit'])) { ?>
 
-            <form action="#" method="post" enctype="multipart/form-data">
+
                 <h2>Přidat vodoměr</h2>
                 <table>
                     <tr>
                         <td><label for="cislo_vodomeru">Číslo vodoměru</label>
-                        <td><input type="number" name="cislo_vodomeru"></td>
+                        <td><input required type="number" name="cislo_vodomeru"></td>
                     </tr>
                     <tr>
                         <td><label for="druh_vodomeru">Druh vodoměru</label>
-                        <td><input type="text" name="druh_vodomeru"></td>
+                        <td><input required type="text" name="druh_vodomeru"></td>
                     </tr>
                     <tr>
                         <td><label for="rok_pristi_revize">Rok příští revize</label>
-                        <td><input type="text" name="rok_pristi_revize"></td>
+                        <td><input required type="text" name="rok_pristi_revize"></td>
                     </tr>
                     <tr>
                         <td><label for="datum_montaz">Namontován</label>
@@ -64,15 +65,15 @@
                     <table>
                         <tr>
                             <td><label for="cislo_vodomeru">Číslo vodoměru</label>
-                            <td><input type="number" name="cislo_vodomeru"value="<?php echo $cislo_vodomeru; ?>"</td>
+                            <td><input required type="number" name="cislo_vodomeru"value="<?php echo $cislo_vodomeru; ?>"</td>
                         </tr>
                         <tr>
                             <td><label for="druh_vodomeru">Druh vodoměru</label>
-                            <td><input type="text" name="druh_vodomeru"value="<?php echo $druh_vodomeru; ?>"</td>
+                            <td><input required type="text" name="druh_vodomeru"value="<?php echo $druh_vodomeru; ?>"</td>
                         </tr>
                         <tr>
                             <td><label for="rok_pristi_revize">Rok příští revize</label>
-                            <td><input type="text" name="rok_pristi_revize"value="<?php echo $rok_pristi_revize; ?>"</td>
+                            <td><input required type="text" name="rok_pristi_revize"value="<?php echo $rok_pristi_revize; ?>"</td>
                         </tr>
                         <tr>
                             <td><label for="datum_montaz">Namontován</label>
