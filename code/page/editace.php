@@ -4,7 +4,7 @@
         <a href="<?= BASE_URL . "?page=edit_mista" ?>">Odběrná místa</a>
         <a href="<?= BASE_URL . "?page=edit_odecty" ?>">Odečty vodoměrů</a>
         <a href="<?= BASE_URL . "?page=edit_pohyby" ?>">Pohyby vodoměrů</a>
-        <a href="<?= BASE_URL . "?page=edit_ciselpod" ?>">Číselník podniku</a>
+        <a href="<?= BASE_URL . "?page=edit_ciselpod" ?>">Adresář</a>
         <a href="<?= BASE_URL . "?page=edit_sazby" ?>">Sazby</a>
 </nav>
 </div>

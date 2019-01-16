@@ -227,11 +227,6 @@ if ($authService->hasIdentity()) : ?>
                         }
                         echo '</table>'; ?>
     </main>
-    <footer>
-        <?php
-        include_once("./page/footer.php");
-        ?>
-    </footer>
 <?php else  : ?>
     <section id="hero">
         <h2>Pro zobrazení správy uživatelů musíte být přihlášeni.</h2>

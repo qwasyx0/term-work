@@ -240,11 +240,6 @@ if ($authService->hasIdentity()) :
         </div>
     </div>
     </main>
-    <footer>
-        <?php
-        include_once("./page/footer.php");
-        ?>
-    </footer>
 <?php
 
 else  : ?>

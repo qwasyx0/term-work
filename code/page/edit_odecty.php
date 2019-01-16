@@ -1,4 +1,5 @@
 <?php if ($authService->hasIdentity()) :
+    if ($_SESSION['role'] == 1) {
     include './page/editace.php';
     if (isset($_GET['id_smazat'])) {
         try {
@@ -13,16 +14,15 @@
     }
     if (isset($_GET['id_upravit'])) {
         $upravit = $_GET['id_upravit'];
-
         try {
-            $sql2 = "select o.ID_VODOMER, v.CISLO_VODOMERU, o.IDCISELPOD, c.FIRMA, o.ID_ODBERMISTO, m.ODBERMISTO, o.ID_VODOMERYPOHYBY, p.ID,  o.OBDOBI_OD, o.OBDOBI_DO, o.NOVY_STAV, o.PREDCHOZI_STAV, o.CASTKA_BEZ_DPH,
-                            o.CASTKA_VCETNE_DPH, o.TYP_SAZBY, s.CENA from odectyvodomeru o 
+            $sql2 = "select o.ID_VODOMER, v.CISLO_VODOMERU, o.IDCISELPOD, c.FIRMA, o.ID_ODBERMISTO, m.ODBERMISTO, o.ID_VODOMERYPOHYBY,
+                            p.ID,  o.OBDOBI_OD, o.OBDOBI_DO, o.NOVY_STAV, o.PREDCHOZI_STAV, o.CASTKA_BEZ_DPH, o.CASTKA_VCETNE_DPH, 
+                            o.TYP_SAZBY, s.CENA from odectyvodomeru o 
                             left join sazby s on o.TYP_SAZBY= s.TYP_SAZBY
                             left join vodomery v on o.ID_VODOMER = v.ID 
                             left join ciselpod c on o.IDCISELPOD = c.IDCISELPOD
                             left join odbernamista m on o.ID_ODBERMISTO = m.ID
-                            left join vodomerypohyby p on o.ID_VODOMER = p.ID_VODOMERY
-                             where o.CODECET = :id";
+                            left join vodomerypohyby p on o.ID_VODOMER = p.ID_VODOMERY where o.CODECET = :id";
             $q2 = $pdo->prepare($sql2);
             $q2->bindValue(":id", $upravit);
             $q2->execute();
@@ -99,7 +99,9 @@
                             echo '</select></td></tr>';
 
                             try {
-                                $sql = 'select v.ID, v.CISLO_VODOMERU, c.IDCISELPOD, c.FIRMA from vodomery v left join ciselpod c on v.IDCISELPOD = c.IDCISELPOD where v.IDCISELPOD is not NULL';
+                                $sql = 'select v.ID, v.CISLO_VODOMERU, c.IDCISELPOD, c.FIRMA from vodomery v 
+                                        left join ciselpod c on v.IDCISELPOD = c.IDCISELPOD 
+                                        where v.IDCISELPOD is not NULL';
                                 $q = $pdo->prepare($sql);
                                 $q->execute();
                             } catch (PDOException $e) {
@@ -342,7 +344,9 @@
         </div>
 
     </main>
-
+    <?php } else {
+        echo '<h2>Dostupné pouze pro administrátora.</h2>';
+    } ?>
 <?php else : ?>
     <section id="hero">
         <h2>Pro editaci tabulek musíte být přihlášeni.</h2>

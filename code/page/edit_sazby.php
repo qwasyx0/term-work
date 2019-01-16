@@ -1,4 +1,5 @@
 <?php if ($authService->hasIdentity()) :
+    if ($_SESSION['role'] == 1) {
     include './page/editace.php';
     if (isset($_GET['id_smazat'])) {
         try {
@@ -165,6 +166,10 @@
         </div>
 
     </main>
+<?php
+        } else {
+        echo '<h2>Dostupné pouze pro administrátora.</h2>';
+        } ?>
 <?php else : ?>
     <section id="hero">
         <h2>Pro editaci tabulek musíte být přihlášeni.</h2>
