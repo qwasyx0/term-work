@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fda8bcc3-99a7-4526-982a-980abef9d824" name="Default Changelist" comment="editace - zbytek, zbyva upravit">
+    <list default="true" id="fda8bcc3-99a7-4526-982a-980abef9d824" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/edit_ciselpod.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/edit_ciselpod.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/edit_mista.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/edit_mista.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/edit_odecty.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/edit_odecty.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/edit_pohyby.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/edit_pohyby.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/edit_sazby.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/edit_sazby.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/edit_vodomery.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/edit_vodomery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/editace.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/editace.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/import.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/import.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/odecty.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/odecty.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/page/users.php" beforeDir="false" afterPath="$PROJECT_DIR$/code/page/users.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/IWWW_doumentace_holy.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/activity_diagram.PNG" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/databazovy_model.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/docs/databazovy_model.PNG" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/use_case.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/docs/use_case.PNG" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +33,7 @@
     <session id="-997445140">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="20" />
+          <entry key="project.closed" value="21" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.15" value="2" />
           <entry key="project.open.time.17" value="3" />
@@ -72,7 +58,7 @@
           <entry key="UZIVATELE" value="1" />
           <entry key="VV_UZIVATELE" value="2" />
           <entry key="css" value="3" />
-          <entry key="php" value="47" />
+          <entry key="php" value="48" />
           <entry key="png" value="1" />
           <entry key="sql" value="4" />
           <entry key="users" value="1" />
@@ -84,7 +70,7 @@
           <entry key="CSS" value="5" />
           <entry key="Database Element" value="6" />
           <entry key="Image" value="4" />
-          <entry key="PHP" value="71" />
+          <entry key="PHP" value="72" />
           <entry key="Scratch" value="4" />
           <entry key="XML" value="4" />
         </counts>
@@ -95,7 +81,7 @@
           <entry key="css" value="151" />
           <entry key="php" value="4525" />
           <entry key="sql" value="806" />
-          <entry key="txt" value="20" />
+          <entry key="txt" value="26" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
@@ -103,7 +89,7 @@
           <entry key="CSS" value="290" />
           <entry key="HTML" value="43" />
           <entry key="PHP" value="19047" />
-          <entry key="PLAIN_TEXT" value="74" />
+          <entry key="PLAIN_TEXT" value="80" />
           <entry key="SQL" value="325" />
           <entry key="Scratch" value="857" />
         </counts>
@@ -133,10 +119,24 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/code/page/edit_ciselpod.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2907">
+              <folding>
+                <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code/page/edit_odecty.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="626">
-              <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+            <state relative-caret-position="619">
+              <caret line="270" column="43" lean-forward="true" selection-start-line="270" selection-start-column="43" selection-end-line="270" selection-end-column="43" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -154,7 +154,7 @@
         <entry file="file://$PROJECT_DIR$/code/page/edit_mista.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="204">
-              <caret line="12" column="46" lean-forward="true" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
+              <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -195,7 +195,7 @@
         <entry file="file://$PROJECT_DIR$/code/page/editace.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+              <caret line="15" selection-start-line="15" selection-end-line="15" />
             </state>
           </provider>
         </entry>
@@ -210,11 +210,6 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/use_case.PNG">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/docs/use_case2.png">
           <provider selected="true" editor-type-id="images" />
         </entry>
@@ -223,7 +218,7 @@
         <entry file="file://$PROJECT_DIR$/code/page/odecty.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="412">
-              <caret line="252" lean-forward="true" selection-start-line="252" selection-end-line="252" />
+              <caret line="252" selection-start-line="252" selection-end-line="252" />
             </state>
           </provider>
         </entry>
@@ -327,8 +322,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
-    <option name="width" value="1939" />
-    <option name="height" value="1049" />
+    <option name="width" value="1940" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -449,7 +444,7 @@
       <workItem from="1547577086316" duration="17441000" />
       <workItem from="1547633304691" duration="13375000" />
       <workItem from="1547656893310" duration="1417000" />
-      <workItem from="1547662279321" duration="1810000" />
+      <workItem from="1547662279321" duration="2840000" />
     </task>
     <task id="LOCAL-00001" summary="9_12">
       <created>1544377400173</created>
@@ -514,11 +509,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547595088792</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Hotovo">
+      <created>1547674001945</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1547674001945</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="142262000" />
+    <option name="totallyTimeSpent" value="143292000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -531,7 +533,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2080537" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -594,7 +595,8 @@
     <MESSAGE value="editace - kostra" />
     <MESSAGE value="editace - odberna mista" />
     <MESSAGE value="editace - zbytek, zbyva upravit" />
-    <option name="LAST_COMMIT_MESSAGE" value="editace - zbytek, zbyva upravit" />
+    <MESSAGE value="Hotovo" />
+    <option name="LAST_COMMIT_MESSAGE" value="Hotovo" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -713,18 +715,6 @@
     <entry file="file://$PROJECT_DIR$/code/xml/odecty_2019-01-07_6.xml" />
     <entry file="file://$PROJECT_DIR$/code/xml/odecty_2019-01-07_13.xml" />
     <entry file="file://$PROJECT_DIR$/code/xml/odecty_2019-01-09_6.xml" />
-    <entry file="file://$PROJECT_DIR$/code/page/edit_ciselpod.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/code/page/edit_pohyby.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -755,7 +745,7 @@
     <entry file="file://$PROJECT_DIR$/code/page/odecty.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="412">
-          <caret line="252" lean-forward="true" selection-start-line="252" selection-end-line="252" />
+          <caret line="252" selection-start-line="252" selection-end-line="252" />
         </state>
       </provider>
     </entry>
@@ -795,7 +785,7 @@
     <entry file="file://$PROJECT_DIR$/code/page/editace.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
@@ -822,14 +812,14 @@
     <entry file="file://$PROJECT_DIR$/code/page/edit_mista.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
-          <caret line="12" column="46" lean-forward="true" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
+          <caret line="12" column="46" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/code/page/edit_odecty.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="626">
-          <caret line="50" lean-forward="true" selection-start-line="50" selection-end-line="50" />
+        <state relative-caret-position="619">
+          <caret line="270" column="43" lean-forward="true" selection-start-line="270" selection-start-column="43" selection-end-line="270" selection-end-column="43" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
@@ -838,6 +828,18 @@
             <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#td#6;n#tr#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#a#0;n#td#7;n#tr#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code/page/edit_ciselpod.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2907">
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
