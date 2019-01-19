@@ -22,7 +22,9 @@ $authService = Authentication::getInstance();
         <?php if ($authService->hasIdentity()) : ?>
             <a href="<?= BASE_URL . "?page=import" ?>">Import odečtu</a>
             <a href="<?= BASE_URL . "?page=odecty" ?>">Prohlížení odečtů</a>
-            <a href="<?= BASE_URL . "?page=edit_vodomery" ?>">Editace</a>
+      <?php   if ($_SESSION['role'] == 1) {?>
+            <a href="<?= BASE_URL . "?page=edit_odecty" ?>">Editace</a>
+      <?php   }?>
             <a href="<?= BASE_URL . "?page=users" ?>">Nastavení</a>
             <!-- <a href="<?= BASE_URL . "?page=kontakt" ?>">Kontakt</a> -->
             <a href="<?= BASE_URL . "?page=logout" ?>">Odhlásit</a>

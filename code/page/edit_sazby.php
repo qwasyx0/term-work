@@ -28,7 +28,7 @@
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
-        echo '<br> <div style="text-align: center;"><a style="color:blue;" href="index.php?page=edit_sazby">Zpět</a><br></div>>';
+        echo '<br> <div style="text-align: center;"><a style="color:blue;" href="index.php?page=edit_sazby">Zpět</a><br></div>';
     } ?>
 
     <main>
