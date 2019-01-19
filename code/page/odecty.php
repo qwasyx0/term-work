@@ -31,19 +31,19 @@ if ($authService->hasIdentity()) :
             <div style="overflow-x:auto;">
                 <table id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
-                        <th>Odběrné místo:</th>
-                        <th>Obec:</th>
-                        <th>Ulice:</th>
-                        <th>Číslo popisné / evidenční:</th>
-                        <th>Číslo domu:</th>
-                        <th>Parcela:</th>
-                        <th>Firma:</th>
-                        <th>Ulice sídlo:</th>
-                        <th>PSČ:</th>
-                        <th>Město:</th>
-                        <th>Číslo vodoměru:</th>
-                        <th>Datum montáže vodoměru:</th>
-                        <th>Druh vodoměru:</th>
+                        <th>Odběrné místo</th>
+                        <th>Obec</th>
+                        <th>Ulice</th>
+                        <th>Číslo popisné / evidenční</th>
+                        <th>Číslo domu</th>
+                        <th>Parcela</th>
+                        <th>Firma</th>
+                        <th>Ulice sídlo</th>
+                        <th>PSČ</th>
+                        <th>Město</th>
+                        <th>Číslo vodoměru</th>
+                        <th>Datum montáže vodoměru</th>
+                        <th>Druh vodoměru</th>
                     </tr>
                     <?php
                     if ($_SESSION['role'] == 1) {
@@ -85,26 +85,26 @@ if ($authService->hasIdentity()) :
             <div style="overflow-x:auto;">
                 <table id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
-                        <th>Období od:</th>
-                        <th>Období do:</th>
-                        <th>Nový stav:</th>
-                        <th>Předochozí stav:</th>
-                        <th>Částka bez DPH:</th>
-                        <th>Částka včetně DPH:</th>
-                        <th>Číslo vodoměru:</th>
-                        <th>Rok příští revize:</th>
-                        <th>Druh vodoměru:</th>
-                        <th>Firma:</th>
-                        <th>Ulice sídlo:</th>
-                        <th>PSČ:</th>
-                        <th>Město:</th>
-                        <th>Odběrné místo:</th>
-                        <th>Typ sazby:</th>
-                        <th>Obec:</th>
-                        <th>Ulice odběrné místo:</th>
-                        <th>Číslo popisné / evidenční:</th>
-                        <th>Číslo domu:</th>
-                        <th>Parcela:</th>
+                        <th>Období od</th>
+                        <th>Období do</th>
+                        <th>Nový stav</th>
+                        <th>Předochozí stav</th>
+                        <th>Částka bez DPH</th>
+                        <th>Částka včetně DPH</th>
+                        <th>Číslo vodoměru</th>
+                        <th>Rok příští revize</th>
+                        <th>Druh vodoměru</th>
+                        <th>Firma</th>
+                        <th>Ulice sídlo</th>
+                        <th>PSČ</th>
+                        <th>Město</th>
+                        <th>Odběrné místo</th>
+                        <th>Typ sazby</th>
+                        <th>Obec</th>
+                        <th>Ulice odběrné místo</th>
+                        <th>Číslo popisné / evidenční</th>
+                        <th>Číslo domu</th>
+                        <th>Parcela</th>
                     </tr>
                     <?php
                     if ($_SESSION['role'] == 1) {
@@ -155,11 +155,12 @@ if ($authService->hasIdentity()) :
             <div id="divpohyby">
                 <table id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
-                        <th>Datum pohybu:</th>
-                        <th>Druh pohybu:</th>
-                        <th>Popis pohybu:</th>
-                        <th>Číslo vodoměru:</th>
-                        <th>Druh vodoměru:</th>
+                        <th>Datum pohybu</th>
+                        <th>Druh pohybu</th>
+                        <th>Popis pohybu</th>
+                        <th>Na odoběrném místě</th>
+                        <th>Číslo vodoměru</th>
+                        <th>Druh vodoměru</th>
                     </tr>
 
                     <?php
@@ -181,6 +182,7 @@ if ($authService->hasIdentity()) :
                                     <td>' . date("d.m.Y", strtotime($radek["DATUM_POHYBU"])) . '</td>
                                     <td>' . $radek["DRUH_POHYBU"] . '</td>
                                     <td>' . $radek["POPIS_POHYBU"] . '</td>
+                                    <td>' . $radek["ODBERMISTO"] . '</td>
                                     <td>' . $radek["CISLO_VODOMERU"] . '</td>
                                     <td>' . $radek["DRUH_VODOMERU"] . '</td>                                 
                                 </tr> ';
@@ -194,19 +196,19 @@ if ($authService->hasIdentity()) :
             <div style="overflow-x:auto;">
                 <table id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
-                        <th>Číslo vodoměru:</th>
-                        <th>Rok příští revize:</th>
-                        <th>Datum montáže vodoměru:</th>
-                        <th>Druh vodoměru:</th>
-                        <th>Obec:</th>
-                        <th>Ulice odběrné místo:</th>
-                        <th>Číslo popisné / evidenční:</th>
-                        <th>Číslo domu:</th>
-                        <th>Parcela:</th>
-                        <th>Firma:</th>
-                        <th>Ulice sídlo:</th>
-                        <th>PSČ:</th>
-                        <th>Město:</th>
+                        <th>Číslo vodoměru</th>
+                        <th>Rok příští revize</th>
+                        <th>Datum montáže vodoměru</th>
+                        <th>Druh vodoměru</th>
+                        <th>Obec</th>
+                        <th>Ulice odběrné místo</th>
+                        <th>Číslo popisné / evidenční</th>
+                        <th>Číslo domu</th>
+                        <th>Parcela</th>
+                        <th>Firma</th>
+                        <th>Ulice sídlo</th>
+                        <th>PSČ</th>
+                        <th>Město</th>
                     </tr>
                     <?php
 
