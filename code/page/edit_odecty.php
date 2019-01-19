@@ -81,6 +81,7 @@ where i.ID = :id";
                 <div class="formular1">
                     <form action="#" method="post">
                         <?php    if (isset($_GET['id_zapsat'])) { ?>
+
                         <h2>Zapsat importovaný odečet</h2
                         <table>
                             <tr>
@@ -91,7 +92,6 @@ where i.ID = :id";
                                 <td><label for="obdobi_do">Datum odečtu</label>
                                 <td><input required type="date" name="obdobi_do" value='<?php echo date($datumz); ?>'>
                             </tr>
-
                             <?php } else {?>
 
                         <?php if (!isset($_GET['id_upravit'])) { ?>
@@ -256,10 +256,10 @@ where i.ID = :id";
                                 echo '</td></tr>';
                                 ?>
                             </table>
-                            <br/><br/><br/><br/>
+
                     </form>
                 </div>
-
+                <br/><br/><br/><br/>
 
                 <?php
                 if (isset($_POST['submit_odecty']) || isset($_POST['submit_upravit'])) {

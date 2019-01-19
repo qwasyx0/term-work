@@ -18,6 +18,7 @@ $authService = Authentication::getInstance();
         $roleslovne = " běžný uživatel";
     }
 ?>
+
     <nav id="nav">
         <?php if ($authService->hasIdentity()) : ?>
             <a href="<?= BASE_URL . "?page=import" ?>">Import odečtu</a>

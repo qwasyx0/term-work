@@ -489,3 +489,6 @@ footer {
     visibility: visible;
     opacity: 1;
 }
+#tablecol .a {
+    max-width: 300px;
+}

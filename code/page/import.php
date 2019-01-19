@@ -67,7 +67,6 @@ if ($authService->hasIdentity()) :
                             $tmpName = $_FILES['image']['tmp_name'];
                             $fp = fopen($tmpName, 'rb');
                             $fotka_content = file_get_contents($tmpName);
-
                             fclose($fp);
                         }
                         try {
@@ -115,13 +114,11 @@ if ($authService->hasIdentity()) :
                     }
                     echo 'Úprava proběhla úspěšně.';
                 }
-
             }
             ?>
             <div id="noprint">
                 <form action="#" method="post" enctype="multipart/form-data">
                     <?php if (!isset($_GET['id_upravit'])) { ?>
-
 
                         <table>
                             <tr>
@@ -152,8 +149,7 @@ if ($authService->hasIdentity()) :
                         <table>
                             <tr>
                                 <td><label for="datum_odectu">Datum odečtu: </label></td>
-                                <td><input required type="date" name="datum_odectu"
-                                           value='<?php echo date($datum_odectu); ?>'>
+                                <td><input required type="date" name="datum_odectu" value='<?php echo date($datum_odectu); ?>'>
                                 </td>
                             </tr>
                             <tr>
@@ -204,8 +200,6 @@ if ($authService->hasIdentity()) :
         } ?>
         <br/>
         <br/>
-
-
         <script>
             document.getElementById("image").onchange = function () {
                 var reader = new FileReader();
@@ -224,7 +218,7 @@ if ($authService->hasIdentity()) :
                 <h2 style="text-align: center;">Všechny importované odečty</h2>
             <?php } ?>
             <div id="divpohyby">
-                <table id="tablecol" cellspacing="0" cellpadding="0">
+                <table name="importtable" id="tablecol" cellspacing="0" cellpadding="0">
                     <tr>
                         <th>Firma</th>
                         <th>Stav</th>
@@ -235,7 +229,6 @@ if ($authService->hasIdentity()) :
                         <th>Upravit</th>
                         <th>Smazat</th>
                     </tr>
-
                     <?php
                     try {
                         if ($_SESSION['role'] == 1) {
@@ -253,34 +246,32 @@ if ($authService->hasIdentity()) :
                         echo "Error: " . $e->getMessage();
                     }
                     while ($radek = $q->fetch(PDO::FETCH_ASSOC)) {
-                        if ($radek["FOTKA"] != NULL) {
-                            $foto = "Ano";
-                        } else {
-                            $foto = "Ne";
-                        }
-
-                        echo '
+                    if ($radek["FOTKA"] != NULL) {
+                        $foto = "Ano";
+                    } else {
+                        $foto = "Ne";
+                    }
+                    echo '
                                 <tr>
                                     <td>' . $radek["FIRMA"] . '</td>
                                     <td>' . $radek["STAV"] . '</td>   
                                     <td>' . date("d.m.Y", strtotime($radek["DATUM_ODECTU"])) . '</td>';
-                            if ($foto=="Ano") {
-
-                                ?>
-
-
-<td><a href="#" target="_blank" onClick='zobrazNaNovemPanelu(this)'> <?php echo'<img id="choicedPhoto" width="100" height="100" src="data:image/jpg;base64,'.base64_encode($radek['FOTKA']).'"></a></td> ';
-                            }
-                            else {
+                    if ($foto == "Ano") { ?>
+                    <td>
+                        <a href="#" target="_blank"
+                           onClick='zobrazNaNovemPanelu(this)'><?php echo '<img id="choicedPhoto" width="100" height="100" src="data:image/jpg;base64,' . base64_encode($radek['FOTKA']) . '">
+                        </a>
+                    </td> ';
+                            } else {
                                 echo '<td >' . $foto . '</td>'; ?>
-                                <?php }
-                        echo '
-                                    <td>' . $radek["KOMENTAR"] . '</td>   
+                            <?php }
+                            echo '
+                                    <td class="a">' . $radek["KOMENTAR"] . '</td>   
                                     <td><a style="color:blue;" href="index.php?page=edit_odecty&id_zapsat=' . $radek["ID"] . '">Zapsat</a></td>                                          
-                                    <td><a style="color:blue;" href="index.php?page=import&id_upravit=' . $radek["ID"]. '">Upravit</a></td>                                                        
+                                    <td><a style="color:blue;" href="index.php?page=import&id_upravit=' . $radek["ID"] . '">Upravit</a></td>                                                        
                                     <td><a style="color:blue;" href="index.php?page=import&id_smazat=' . $radek["ID"] . '">Smazat</a></td>       
                                 </tr> ';
-                } ?>
+                            } ?>
                 </table>
 
             </div>
